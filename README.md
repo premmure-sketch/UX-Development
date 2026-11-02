@@ -1,4 +1,4 @@
-# PulseWorkforce — Advanced Workforce Analytics Platform (Task 2)
+# Stackly — Advanced Workforce Analytics Platform (Task 2)
 
 An enterprise-grade, full-stack **Workforce Analytics and Attendance Telemetry Platform** developed independently for **Task 2: Advanced UI/UX Dashboard Development, Architecture & SQLite Integration**.
 
@@ -287,7 +287,7 @@ All **21 automated tests** passed with a 100% success rate:
 
 ## 🎨 Figma Design Reference
 
-- **Figma Design System Link**: [PulseWorkforce Enterprise Design System (Figma)](https://www.figma.com/design/pulseworkforce-analytics-dashboard)
+- **Figma Design System Link**: [Stackly Enterprise Design System (Figma)](https://www.figma.com/design/stackly-workforce-analytics-dashboard)
 - **Typography**: Primary typeface `Plus Jakarta Sans`, secondary `Inter`, numerical data `JetBrains Mono`.
 - **Palette Tokens**: Primary Indigo `#4f46e5` / `#818cf8`, Success Emerald `#10b981`, Warning Amber `#f59e0b`, Error Rose `#ef4444`, Cyan Secondary `#06b6d4`, Dark Surface `#111827`, Light Surface `#ffffff`.
 - **Accessibility**: All color contrast ratios meet or exceed WCAG 2.1 AAA requirements (>7:1 on body text, >4.5:1 on captions).

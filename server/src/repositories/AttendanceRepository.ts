@@ -97,7 +97,6 @@ export class AttendanceRepository implements IAttendanceRepository {
     const attendanceRateVal = total > 0 ? (attended / total) * 100 : 0
     const onTimeBase = present + late
     const onTimeRateVal = onTimeBase > 0 ? (present / onTimeBase) * 100 : 100
-    const absenteeismRateVal = total > 0 ? ((absent + onLeave) / total) * 100 : 0
     const remoteRateVal = total > 0 ? (remoteHybrid / total) * 100 : 0
 
     // Fetch past 7 days sparkline from SQLite
@@ -231,10 +230,6 @@ export class AttendanceRepository implements IAttendanceRepository {
     const baseDate = new Date(targetDate)
 
     let days = 7
-    let formatLabel = (d: Date, idx: number) => {
-      const daysArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-      return daysArr[d.getDay()]
-    }
 
     if (datePreset === 'today') {
       // Hourly buckets for today
@@ -256,7 +251,6 @@ export class AttendanceRepository implements IAttendanceRepository {
       ]
     } else if (datePreset === 'last30days' || datePreset === 'thisMonth') {
       days = 30
-      formatLabel = (d: Date, idx: number) => `Day ${idx + 1}`
     }
 
     // Query aggregated days from database
@@ -351,7 +345,6 @@ export class AttendanceRepository implements IAttendanceRepository {
   }
 
   getWorkforceComposition(dimension: 'arrangement' | 'type', filters: DashboardFilterOptions): WorkforceBreakdownItemDTO[] {
-    const targetDate = this.resolveDate(filters)
     const scaleFactor = 1428 / 30
 
     const conditions: string[] = ['e.is_active = 1']

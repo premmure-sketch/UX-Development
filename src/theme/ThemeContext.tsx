@@ -21,7 +21,7 @@ export const useThemeContext = () => useContext(ThemeContext)
 export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mode, setMode] = useState<ThemeMode>(() => {
     try {
-      const saved = localStorage.getItem('pulse_workforce_theme')
+      const saved = localStorage.getItem('stackly_theme') || localStorage.getItem('pulse_workforce_theme')
       if (saved === 'light' || saved === 'dark') return saved
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark'
@@ -34,7 +34,7 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   useEffect(() => {
     try {
-      localStorage.setItem('pulse_workforce_theme', mode)
+      localStorage.setItem('stackly_theme', mode)
     } catch {
       // Ignore
     }

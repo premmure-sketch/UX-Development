@@ -1,7 +1,6 @@
 import { getDatabase } from '../db/database'
 import type { Database } from 'better-sqlite3'
 import type {
-  EmployeeRow,
   EmployeeDetailsDTO,
   EmployeeFilterOptions,
   PaginatedResult,

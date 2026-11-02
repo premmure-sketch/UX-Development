@@ -9,7 +9,7 @@ describe('Workforce Analytics Platform — Dashboard UI/UX & Task 2 Integration'
 
   it('renders top navigation and platform branding', () => {
     render(<App />)
-    expect(screen.getByText('PulseWorkforce')).toBeInTheDocument()
+    expect(screen.getByText('Stackly')).toBeInTheDocument()
     expect(screen.getByText('Enterprise')).toBeInTheDocument()
     expect(screen.getByText('Dr. Alistair Vance')).toBeInTheDocument()
     expect(screen.getByText('Workforce Intelligence Dashboard')).toBeInTheDocument()
@@ -67,11 +67,11 @@ describe('Workforce Analytics Platform — Dashboard UI/UX & Task 2 Integration'
 
     // Click to toggle
     fireEvent.click(themeButton)
-    expect(localStorage.getItem('pulse_workforce_theme')).toBe('dark')
+    expect(localStorage.getItem('stackly_theme')).toBe('dark')
 
     // Click again to toggle back
     fireEvent.click(themeButton)
-    expect(localStorage.getItem('pulse_workforce_theme')).toBe('light')
+    expect(localStorage.getItem('stackly_theme')).toBe('light')
   })
 
   it('filters employees dynamically by search keyword', async () => {

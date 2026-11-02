@@ -6,7 +6,7 @@ const app = createApp()
 
 const server = app.listen(PORT, () => {
   console.log(`=======================================================`)
-  console.log(`🚀 PulseWorkforce SQLite Backend API Server`)
+  console.log(`🚀 Stackly SQLite Backend API Server`)
   console.log(`📡 URL: http://localhost:${PORT}`)
   console.log(`🩺 Health: http://localhost:${PORT}/api/health`)
   console.log(`📊 Stats:  http://localhost:${PORT}/api/dashboard/stats`)

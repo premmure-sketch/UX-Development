@@ -117,7 +117,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                     WebkitTextFillColor: 'transparent',
                   }}
                 >
-                  PulseWorkforce
+                  Stackly
                 </Typography>
                 <Chip
                   label="Enterprise"
@@ -144,7 +144,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   mt: 0.25,
                 }}
               >
-                Workforce Intelligence & Attendance Telemetry
+                Workforce Intelligence & Attendance Platform
               </Typography>
             </Box>
           </Box>
@@ -386,7 +386,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                 Dr. Alistair Vance
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                alistair.vance@pulsework.io
+                alistair.vance@stackly.io
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <Chip

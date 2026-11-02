@@ -24,6 +24,10 @@ export class DashboardService {
     return this.attendanceRepo.getKpiSummary(filters)
   }
 
+  getDepartments() {
+    return this.departmentRepo.findAll()
+  }
+
   getTrends(filters: DashboardFilterOptions): AttendanceTrendPointDTO[] {
     return this.attendanceRepo.getAttendanceTrends(filters)
   }

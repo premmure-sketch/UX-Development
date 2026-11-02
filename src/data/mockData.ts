@@ -38,7 +38,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1001',
     name: 'Sarah Jenkins',
-    email: 'sarah.jenkins@pulsework.io',
+    email: 'sarah.jenkins@stackly.io',
     role: 'VP of Engineering',
     department: 'Engineering',
     location: 'San Francisco',
@@ -55,7 +55,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1002',
     name: 'Marcus Chen',
-    email: 'marcus.chen@pulsework.io',
+    email: 'marcus.chen@stackly.io',
     role: 'Principal Cloud Architect',
     department: 'Engineering',
     location: 'San Francisco',
@@ -72,7 +72,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1003',
     name: 'Elena Rostova',
-    email: 'elena.rostova@pulsework.io',
+    email: 'elena.rostova@stackly.io',
     role: 'Staff Product Designer',
     department: 'Product',
     location: 'London',
@@ -89,7 +89,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1004',
     name: 'David O\'Connor',
-    email: 'david.oconnor@pulsework.io',
+    email: 'david.oconnor@stackly.io',
     role: 'Senior DevOps Engineer',
     department: 'Engineering',
     location: 'Remote',
@@ -106,7 +106,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1005',
     name: 'Amara Okafor',
-    email: 'amara.okafor@pulsework.io',
+    email: 'amara.okafor@stackly.io',
     role: 'Director of Talent Acquisition',
     department: 'Human Resources',
     location: 'New York HQ',
@@ -123,7 +123,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1006',
     name: 'Liam Gallagher',
-    email: 'liam.gallagher@pulsework.io',
+    email: 'liam.gallagher@stackly.io',
     role: 'Enterprise Account Executive',
     department: 'Sales',
     location: 'New York HQ',
@@ -140,7 +140,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1007',
     name: 'Priya Sharma',
-    email: 'priya.sharma@pulsework.io',
+    email: 'priya.sharma@stackly.io',
     role: 'Lead Data Scientist',
     department: 'Engineering',
     location: 'Singapore',
@@ -157,7 +157,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1008',
     name: 'Lucas Mueller',
-    email: 'lucas.mueller@pulsework.io',
+    email: 'lucas.mueller@stackly.io',
     role: 'Product Operations Manager',
     department: 'Product',
     location: 'Berlin',
@@ -174,7 +174,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1009',
     name: 'Chloe Bennett',
-    email: 'chloe.bennett@pulsework.io',
+    email: 'chloe.bennett@stackly.io',
     role: 'Content Strategy Lead',
     department: 'Marketing',
     location: 'London',
@@ -191,7 +191,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1010',
     name: 'Mateo Hernandez',
-    email: 'mateo.hernandez@pulsework.io',
+    email: 'mateo.hernandez@stackly.io',
     role: 'Senior Financial Analyst',
     department: 'Finance',
     location: 'New York HQ',
@@ -208,7 +208,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1011',
     name: 'Kavita Patel',
-    email: 'kavita.patel@pulsework.io',
+    email: 'kavita.patel@stackly.io',
     role: 'Full Stack Engineer',
     department: 'Engineering',
     location: 'San Francisco',
@@ -226,7 +226,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1012',
     name: 'Tariq Al-Mansoor',
-    email: 'tariq.almansoor@pulsework.io',
+    email: 'tariq.almansoor@stackly.io',
     role: 'Security & Compliance Analyst',
     department: 'Operations',
     location: 'London',
@@ -243,7 +243,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1013',
     name: 'Jessica Vance',
-    email: 'jessica.vance@pulsework.io',
+    email: 'jessica.vance@stackly.io',
     role: 'Customer Support Lead',
     department: 'Customer Support',
     location: 'Remote',
@@ -260,7 +260,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1014',
     name: 'Benjamin Ross',
-    email: 'benjamin.ross@pulsework.io',
+    email: 'benjamin.ross@stackly.io',
     role: 'Growth Marketing Specialist',
     department: 'Marketing',
     location: 'New York HQ',
@@ -277,7 +277,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1015',
     name: 'Hannah Weber',
-    email: 'hannah.weber@pulsework.io',
+    email: 'hannah.weber@stackly.io',
     role: 'HR People Partner',
     department: 'Human Resources',
     location: 'Berlin',
@@ -294,7 +294,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1016',
     name: 'Vikram Singh',
-    email: 'vikram.singh@pulsework.io',
+    email: 'vikram.singh@stackly.io',
     role: 'Senior React Developer',
     department: 'Engineering',
     location: 'San Francisco',
@@ -311,7 +311,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1017',
     name: 'Rachel Adams',
-    email: 'rachel.adams@pulsework.io',
+    email: 'rachel.adams@stackly.io',
     role: 'SDR Team Lead',
     department: 'Sales',
     location: 'San Francisco',
@@ -329,7 +329,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1018',
     name: 'Kenji Takahashi',
-    email: 'kenji.takahashi@pulsework.io',
+    email: 'kenji.takahashi@stackly.io',
     role: 'DevOps & SRE Specialist',
     department: 'Engineering',
     location: 'Singapore',
@@ -346,7 +346,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1019',
     name: 'Sophie Martin',
-    email: 'sophie.martin@pulsework.io',
+    email: 'sophie.martin@stackly.io',
     role: 'Brand & Creative Director',
     department: 'Marketing',
     location: 'London',
@@ -363,7 +363,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1020',
     name: 'Arthur Pendelton',
-    email: 'arthur.pendelton@pulsework.io',
+    email: 'arthur.pendelton@stackly.io',
     role: 'Chief Compliance Officer',
     department: 'Operations',
     location: 'New York HQ',
@@ -380,7 +380,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1021',
     name: 'Fatima Zahra',
-    email: 'fatima.zahra@pulsework.io',
+    email: 'fatima.zahra@stackly.io',
     role: 'Quality Assurance Engineer',
     department: 'Engineering',
     location: 'Berlin',
@@ -397,7 +397,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1022',
     name: 'Carlos Ruiz',
-    email: 'carlos.ruiz@pulsework.io',
+    email: 'carlos.ruiz@stackly.io',
     role: 'Billing & Payroll Specialist',
     department: 'Finance',
     location: 'New York HQ',
@@ -414,7 +414,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1023',
     name: 'Zoe Washington',
-    email: 'zoe.washington@pulsework.io',
+    email: 'zoe.washington@stackly.io',
     role: 'Product Manager - Analytics',
     department: 'Product',
     location: 'San Francisco',
@@ -431,7 +431,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1024',
     name: 'Nils Lindqvist',
-    email: 'nils.lindqvist@pulsework.io',
+    email: 'nils.lindqvist@stackly.io',
     role: 'Customer Success Manager',
     department: 'Customer Support',
     location: 'London',
@@ -449,7 +449,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1025',
     name: 'Deepak Joshi',
-    email: 'deepak.joshi@pulsework.io',
+    email: 'deepak.joshi@stackly.io',
     role: 'Backend Systems Engineer',
     department: 'Engineering',
     location: 'Remote',
@@ -466,7 +466,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1026',
     name: 'Emily Thornton',
-    email: 'emily.thornton@pulsework.io',
+    email: 'emily.thornton@stackly.io',
     role: 'Corporate Communications Lead',
     department: 'Marketing',
     location: 'New York HQ',
@@ -483,7 +483,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1027',
     name: 'Klaus Fischer',
-    email: 'klaus.fischer@pulsework.io',
+    email: 'klaus.fischer@stackly.io',
     role: 'IT Infrastructure Lead',
     department: 'Operations',
     location: 'Berlin',
@@ -500,7 +500,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1028',
     name: 'Gabriela Silva',
-    email: 'gabriela.silva@pulsework.io',
+    email: 'gabriela.silva@stackly.io',
     role: 'International Expansion Lead',
     department: 'Sales',
     location: 'Singapore',
@@ -517,7 +517,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1029',
     name: 'Jordan Bell',
-    email: 'jordan.bell@pulsework.io',
+    email: 'jordan.bell@stackly.io',
     role: 'Frontend UI/UX Intern',
     department: 'Engineering',
     location: 'San Francisco',
@@ -534,7 +534,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-1030',
     name: 'Aisha Al-Hassan',
-    email: 'aisha.alhassan@pulsework.io',
+    email: 'aisha.alhassan@stackly.io',
     role: 'People Operations Coordinator',
     department: 'Human Resources',
     location: 'London',
