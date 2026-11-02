@@ -17,31 +17,38 @@ export type LocationType =
   | 'Remote'
 
 export type EmployeeStatus = 'Present' | 'Late' | 'Remote' | 'On Leave' | 'Absent'
-
 export type EmploymentType = 'Full-time' | 'Contract' | 'Part-time' | 'Intern'
-
 export type WorkArrangement = 'In-Office' | 'Hybrid' | 'Remote'
-
 export type DatePreset = 'today' | 'yesterday' | 'last7days' | 'last30days' | 'thisMonth'
+
+export type EmployeeSortField = 'name' | 'department' | 'location' | 'status' | 'checkInTime' | 'attendanceScore'
+export type SortOrder = 'asc' | 'desc'
 
 export interface Employee {
   id: string
   name: string
+  firstName?: string
+  lastName?: string
   email: string
   role: string
   department: DepartmentType
+  departmentId?: number
+  departmentColor?: string
   location: LocationType
+  locationId?: number
   workType: EmploymentType
   workArrangement: WorkArrangement
   status: EmployeeStatus
   checkInTime: string | null
-  expectedCheckIn: string
+  checkOutTime?: string | null
+  expectedCheckIn?: string
   checkInLocation: string
   lastActive: string
   leaveReason?: string
   avatarUrl?: string
   attendanceScore: number
   phone: string
+  hireDate?: string
 }
 
 export interface KpiMetric {
@@ -55,11 +62,17 @@ export interface KpiMetric {
 }
 
 export interface DashboardKpiSummary {
-  totalHeadcount: KpiMetric
+  // Required 5 KPI cards for Task 2
+  totalEmployees: KpiMetric
+  present: KpiMetric
+  absent: KpiMetric
+  onLeave: KpiMetric
   attendanceRate: KpiMetric
-  onTimeArrivalRate: KpiMetric
-  absenteeismRate: KpiMetric
-  remoteWorkforce: KpiMetric
+  // Supplementary metrics & backward compatibility
+  totalHeadcount?: KpiMetric
+  onTimeArrivalRate?: KpiMetric
+  absenteeismRate?: KpiMetric
+  remoteWorkforce?: KpiMetric
 }
 
 export interface AttendanceTrendPoint {
@@ -74,7 +87,7 @@ export interface AttendanceTrendPoint {
 }
 
 export interface DepartmentDistributionPoint {
-  department: DepartmentType
+  department: DepartmentType | string
   shortName: string
   headcount: number
   present: number
@@ -97,6 +110,14 @@ export interface DashboardFilters {
   department: string // 'All' or DepartmentType
   location: string   // 'All' or LocationType
   status: string     // 'All' or EmployeeStatus
+}
+
+export interface PaginatedEmployeesResponse {
+  items: Employee[]
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
 }
 
 export type UIState = 'normal' | 'loading' | 'empty' | 'error'

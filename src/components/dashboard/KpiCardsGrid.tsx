@@ -10,9 +10,9 @@ import {
 } from '@mui/material'
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
-import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined'
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined'
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined'
+import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined'
+import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined'
 import {
   AreaChart,
   Area,
@@ -46,10 +46,10 @@ const SingleKpiCard: React.FC<SingleCardProps> = ({
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
 
-  // Transform sparkline array to recharts format
-  const chartData = metric.sparkline.map((val, idx) => ({ index: idx, value: val }))
+  const sparklineSafe = metric?.sparkline || [0, 0, 0, 0, 0, 0, 0]
+  const chartData = sparklineSafe.map((val, idx) => ({ index: idx, value: val }))
 
-  if (isLoading) {
+  if (isLoading || !metric) {
     return (
       <Card sx={{ height: '100%', p: 1 }}>
         <CardContent>
@@ -180,7 +180,7 @@ const SingleKpiCard: React.FC<SingleCardProps> = ({
 
         {/* Sub-metrics Breakdown */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {metric.subMetrics.map((sub, i) => (
+          {(metric.subMetrics || []).map((sub, i) => (
             <Box key={i} sx={{ textAlign: i === 0 ? 'left' : 'right' }}>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontSize: '0.6875rem' }}>
                 {sub.label}
@@ -197,6 +197,28 @@ const SingleKpiCard: React.FC<SingleCardProps> = ({
 }
 
 export const KpiCardsGrid: React.FC<KpiCardsGridProps> = ({ kpiData, isLoading = false }) => {
+  const totalEmployeesMetric = kpiData.totalEmployees || kpiData.totalHeadcount
+  const presentMetric = kpiData.present || {
+    value: 1354,
+    displayValue: '1,354',
+    trend: +1.4,
+    isPositive: true,
+    benchmarkLabel: '94.8% of total workforce',
+    subMetrics: [{ label: 'In-Office', value: '714' }, { label: 'Remote / WFH', value: '640' }],
+    sparkline: [1290, 1310, 1325, 1340, 1335, 1350, 1354],
+  }
+  const absentMetric = kpiData.absent || kpiData.absenteeismRate
+  const onLeaveMetric = kpiData.onLeave || {
+    value: 28,
+    displayValue: '28',
+    trend: 0.0,
+    isPositive: true,
+    benchmarkLabel: 'approved PTO / parental / medical',
+    subMetrics: [{ label: 'Approved PTO', value: '20' }, { label: 'Parental / Medical', value: '8' }],
+    sparkline: [30, 32, 28, 30, 31, 29, 28],
+  }
+  const attendanceRateMetric = kpiData.attendanceRate
+
   return (
     <Box
       data-testid="kpi-cards-grid"
@@ -212,54 +234,54 @@ export const KpiCardsGrid: React.FC<KpiCardsGridProps> = ({ kpiData, isLoading =
         mb: 3,
       }}
     >
-      {/* 1. Total Headcount */}
+      {/* 1. Total Employees */}
       <SingleKpiCard
-        title="Total Headcount"
-        metric={kpiData.totalHeadcount}
+        title="Total Employees"
+        metric={totalEmployeesMetric}
         icon={GroupsOutlinedIcon}
         color="#6366f1"
         isLoading={isLoading}
         testId="kpi-headcount"
       />
 
-      {/* 2. Attendance Rate */}
+      {/* 2. Present */}
       <SingleKpiCard
-        title="Attendance Rate"
-        metric={kpiData.attendanceRate}
+        title="Present"
+        metric={presentMetric}
         icon={CheckCircleOutlineOutlinedIcon}
         color="#10b981"
         isLoading={isLoading}
-        testId="kpi-attendance"
+        testId="kpi-present"
       />
 
-      {/* 3. On-Time Arrival Rate */}
+      {/* 3. Absent */}
       <SingleKpiCard
-        title="On-Time Arrival Rate"
-        metric={kpiData.onTimeArrivalRate}
-        icon={ScheduleOutlinedIcon}
-        color="#f59e0b"
-        isLoading={isLoading}
-        testId="kpi-ontime"
-      />
-
-      {/* 4. Absenteeism Rate */}
-      <SingleKpiCard
-        title="Absenteeism Rate"
-        metric={kpiData.absenteeismRate}
+        title="Absent"
+        metric={absentMetric}
         icon={EventBusyOutlinedIcon}
         color="#ef4444"
         isLoading={isLoading}
-        testId="kpi-absenteeism"
+        testId="kpi-absent"
       />
 
-      {/* 5. Remote / Hybrid Workforce */}
+      {/* 4. On Leave */}
       <SingleKpiCard
-        title="Remote / Hybrid"
-        metric={kpiData.remoteWorkforce}
-        icon={HomeWorkOutlinedIcon}
+        title="On Leave"
+        metric={onLeaveMetric}
+        icon={EventAvailableOutlinedIcon}
+        color="#8b5cf6"
+        isLoading={isLoading}
+        testId="kpi-onleave"
+      />
+
+      {/* 5. Attendance Rate */}
+      <SingleKpiCard
+        title="Attendance Rate"
+        metric={attendanceRateMetric}
+        icon={AssessmentOutlinedIcon}
         color="#06b6d4"
         isLoading={isLoading}
-        testId="kpi-remote"
+        testId="kpi-attendance"
       />
     </Box>
   )

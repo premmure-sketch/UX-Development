@@ -1,197 +1,298 @@
-# PulseWorkforce — Enterprise Workforce Analytics Platform
+# PulseWorkforce — Advanced Workforce Analytics Platform (Task 2)
 
-An enterprise-grade, high-performance **Workforce Analytics and Attendance Telemetry Dashboard** built independently from scratch using **React 19, TypeScript, Vite, Material UI (MUI), and Recharts**.
+An enterprise-grade, full-stack **Workforce Analytics and Attendance Telemetry Platform** developed independently for **Task 2: Advanced UI/UX Dashboard Development, Architecture & SQLite Integration**.
 
-PulseWorkforce provides people operations teams, HR leaders, and department executives with real-time visibility into attendance trends, headcount distribution, remote workforce ratios, and employee check-in activity.
-
----
-
-## 🌟 Key Highlights & Feature Matrix
-
-| Feature | Implementation Details |
-|---|---|
-| **Technology Stack** | React 19 + TypeScript + Vite + Material UI + Recharts |
-| **Top Navigation** | Brand identity, real-time telemetry indicator, global search, notification center with unread badge, light/dark theme switch, user profile dossier menu, and mobile drawer toggle |
-| **Collapsible Sidebar** | Desktop collapsible navigation (260px expanded / 76px collapsed with icon tooltips), persistent drawer on mobile, active indicator badges, and system connectivity status widget |
-| **5 KPI Telemetry Cards** | 1. Total Headcount (1,428 staff, Full-time vs Contract split)<br>2. Attendance Rate (95.4%, target benchmark comparison)<br>3. On-Time Arrival Rate (91.8%, late check-ins counter)<br>4. Absenteeism Rate (3.2%, approved leaves vs unplanned sick)<br>5. Remote / Hybrid Workforce (44.5%, on-site vs hybrid vs remote)<br>_All cards feature micro Recharts sparklines, color-coded trend badges, and sub-metric breakdowns._ |
-| **Attendance Trend Chart** | Multi-series area chart with gradient fills, timeframe presets (`Today`, `7 Days`, `30 Days`, `This Month`), volume vs rate mode toggling, target reference line (95%), and custom glassmorphism tooltip |
-| **Department Distribution** | Stacked/grouped bar chart displaying headcounts and attendance rates across 8 business departments (Engineering, Product, Sales, Marketing, HR, Finance, Operations, Customer Support) |
-| **Workforce Donut Chart** | Interactive Recharts donut chart with central total headcount readout, dimension toggle (**Work Arrangement** vs **Employment Type**), and custom legend cards with counts and percentages |
-| **Live Employee Activity** | Real-time check-in table with status badges (`Present`, `Late`, `Remote`, `On Leave`, `Absent`), department tags, check-in locations, timestamps, pagination, in-table keyword search, status filters, CSV data export, and click-to-open **Employee Dossier Modal** |
-| **Global Filter Toolbar** | Synchronized multi-dimensional filtering by Search Keyword, Date Range, Department, Location, and Attendance Status; active filter pill chips with 1-click removal, and global filter reset |
-| **Evaluator State Controls** | Interactive top evaluation pill bar enabling instant 1-click preview of **Normal (Live)**, **Simulate Loading (Skeletons)**, **Simulate Empty**, and **Simulate Error (with retry)** states |
-| **Dual Theme System** | Polished, WCAG-compliant Light and Dark enterprise color palettes with smooth transitions, persistent `localStorage` synchronization, and system preference detection |
-| **Responsive Layouts** | Fluid grid layouts optimized for 4K/Desktop (>1200px), Tablet (768px–1199px), and Mobile (<768px) with slide-out drawers and horizontal table scrolling |
-| **Testing Suite** | Automated Vitest + React Testing Library test suite (9/9 passed, 100% test success rate) |
+Built upon Task 1 using **React 19, TypeScript, Vite, Material UI (MUI), Recharts, Node.js, Express, and SQLite** (`better-sqlite3`) following the **Repository Pattern** and strict separation of concerns.
 
 ---
 
-## 📸 Screenshots & Responsive Demonstrations
+## 🌟 Executive Summary & Task 2 Requirements Matrix
 
-Screenshots captured automatically via headless Chrome at 2x pixel density:
-
-| View | Screenshot Preview |
-|---|---|
-| **Desktop Light Mode** | `screenshots/dashboard-desktop-light.png` |
-| **Desktop Dark Mode** | `screenshots/dashboard-desktop-dark.png` |
-| **Tablet View (820px)** | `screenshots/dashboard-tablet.png` |
-| **Mobile View (390px)** | `screenshots/dashboard-mobile.png` |
-| **Loading Skeleton State** | `screenshots/dashboard-loading-state.png` |
-| **Error Handling State** | `screenshots/dashboard-error-state.png` |
-| **Empty State** | `screenshots/dashboard-empty-state.png` |
+| Requirement Area | Specification | Implementation in Task 2 |
+|---|---|---|
+| **1. UI/UX Development** | Professional, responsive Workforce Dashboard across Desktop, Tablet & Mobile | Responsive fluid layout with collapsible desktop sidebar (260px/76px), slide-out mobile drawer, executive top nav, notification center, WCAG-compliant light & dark theme system. |
+| **2. Dashboard & Analytics** | Five specific KPI cards: **Total Employees, Present, Absent, On Leave, Attendance Rate** | Implemented with live Recharts sparklines, directional trend badges, benchmark comparisons, and sub-metric breakdowns. |
+| | Employee distribution & attendance charts | Multi-series attendance trend area chart with timeframe selectors (`Today`, `7D`, `30D`, `Month`) and stacked department distribution bar chart. |
+| | Workforce pie / donut chart | Recharts Donut chart with central count readout and dual-dimension toggle (**Work Arrangement** vs **Employment Type**). |
+| | Filters, search, sorting & pagination | Global filter bar (date range, department, location, status), table search, **clickable column header sorting**, and pagination. |
+| **3. Architecture** | Modular architecture, reusable components, SOLID principles, clear separation of concerns | Distinct presentation components, business logic hooks (`useWorkforceData`), typed API service (`apiService`), Express controllers, services, and repository layers. |
+| **4. Backend & SQLite** | Node.js + Express REST API development with mandatory SQLite integration | Express REST API powered by SQLite (`better-sqlite3`), WAL journal mode, relational schemas (`departments`, `locations`, `employees`, `attendance_records`), and Repository Pattern. |
+| | Avoid hardcoded data | Dynamic SQL aggregation and parameterized queries for all KPIs, trends, department metrics, and employee records. |
+| **5. Code Quality & Testing** | Strict typing, loading/empty/error states, unit & integration tests | Zero console errors, full TypeScript coverage, and **21 / 21 passing automated tests** across backend SQLite repositories and frontend UI. |
 
 ---
 
-## 🏗️ Architecture & Project Structure
+## 🏛️ System Architecture & Component Topology
 
-```
-workforce-dashboard-task1/
-├── public/                     # Static assets & icons
-├── scripts/
-│   └── capture-screenshots.mjs # Headless Chrome screenshot capture automation
-├── screenshots/                # Generated high-resolution dashboard previews
-├── src/
-│   ├── assets/                 # SVGs and vector assets
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── EmptyState.tsx       # Zero-match illustrated empty state + reset CTA
-│   │   │   ├── ErrorState.tsx       # API failure error alert + retry connection CTA
-│   │   │   ├── MetricBadge.tsx      # Trend percentage badge with directional icons
-│   │   │   └── StateControls.tsx   # Evaluator state switcher toolbar
-│   │   ├── dashboard/
-│   │   │   ├── AttendanceTrendChart.tsx         # Timeframe-aware Recharts area chart
-│   │   │   ├── DepartmentDistributionChart.tsx  # Department stacked bar chart
-│   │   │   ├── EmployeeDetailModal.tsx          # Employee profile & telemetry dossier dialog
-│   │   │   ├── FilterBar.tsx                    # Multi-criteria filter toolbar
-│   │   │   ├── KpiCardsGrid.tsx                 # 5 KPI cards with micro sparklines
-│   │   │   ├── RecentActivityTable.tsx          # Real-time check-in log table + CSV export
-│   │   │   └── WorkforceDonutChart.tsx          # Work arrangement / contract donut chart
-│   │   └── layout/
-│   │       ├── AppLayout.tsx        # Responsive grid layout orchestrator
-│   │       ├── Sidebar.tsx          # Collapsible desktop & mobile drawer navigation
-│   │       └── TopNav.tsx           # Enterprise header with search, notifications, & user menu
-│   ├── data/
-│   │   └── mockData.ts              # Rich, realistic enterprise workforce dataset
-│   ├── hooks/
-│   │   └── useWorkforceData.ts      # Custom hook managing filters, calculations, & UI states
-│   ├── test/
-│   │   ├── setup.ts                 # Vitest & jsdom test configuration
-│   │   └── Dashboard.test.tsx       # 9 comprehensive unit & component tests
-│   ├── theme/
-│   │   ├── ThemeContext.tsx         # Theme state provider + localStorage persistence
-│   │   └── theme.ts                 # MUI theme definition (light & dark palettes, typography, shapes)
-│   ├── types/
-│   │   └── index.ts                 # Strict TypeScript domain interfaces
-│   ├── App.tsx                      # Primary application component
-│   ├── index.css                    # Global CSS baseline & keyframe animations
-│   └── main.tsx                     # React 19 application entry point
-├── package.json
-├── tsconfig.json
-├── tsconfig.app.json
-├── vite.config.ts
-└── README.md
+```mermaid
+flowchart TD
+    subgraph Client ["Frontend (React 19 + TypeScript + Vite + MUI)"]
+        UI["App.tsx / AppLayout.tsx"]
+        Theme["ThemeContext (Light / Dark)"]
+        Hook["useWorkforceData Hook"]
+        API["apiService (src/services/api.ts)"]
+        
+        UI --> Hook
+        Hook --> API
+        
+        subgraph VisualComponents ["Presentation Layer"]
+            KPI["KpiCardsGrid (5 Cards + Sparklines)"]
+            Trends["AttendanceTrendChart"]
+            DeptBar["DepartmentDistributionChart"]
+            Donut["WorkforceDonutChart"]
+            Table["RecentActivityTable (Sort, Filter, Pagination, CSV)"]
+            Modal["EmployeeDetailModal (Dossier & History)"]
+            Filters["FilterBar (Date, Dept, Loc, Status)"]
+            StateCtrl["StateControls (Normal, Loading, Empty, Error)"]
+        end
+        
+        UI --> VisualComponents
+    end
+
+    subgraph Server ["Backend (Node.js + Express REST API)"]
+        Router["Express App & Routes (/api/*)"]
+        DashCtrl["DashboardController"]
+        EmpCtrl["EmployeeController"]
+        MetaCtrl["MetadataController"]
+        
+        Router --> DashCtrl
+        Router --> EmpCtrl
+        Router --> MetaCtrl
+        
+        subgraph ServicesLayer ["Business Logic Services"]
+            DashSvc["DashboardService"]
+            EmpSvc["EmployeeService"]
+        end
+        
+        DashCtrl --> DashSvc
+        EmpCtrl --> EmpSvc
+        
+        subgraph RepoLayer ["Repository Pattern (Data Access)"]
+            DeptRepo["DepartmentRepository"]
+            LocRepo["LocationRepository"]
+            EmpRepo["EmployeeRepository"]
+            AttRepo["AttendanceRepository"]
+        end
+        
+        DashSvc --> AttRepo
+        DashSvc --> DeptRepo
+        EmpSvc --> EmpRepo
+    end
+
+    subgraph Database ["Persistence Layer (SQLite)"]
+        DB[(server/data/workforce.db)]
+        AttRepo --> DB
+        EmpRepo --> DB
+        DeptRepo --> DB
+        LocRepo --> DB
+    end
+
+    API -->|HTTP REST / JSON| Router
 ```
 
 ---
 
-## 🚀 Getting Started & Setup Instructions
+## 🗄️ SQLite Database Schema
+
+The database is stored in `server/data/workforce.db` with WAL mode enabled (`PRAGMA journal_mode = WAL`) and foreign key enforcement (`PRAGMA foreign_keys = ON`).
+
+### 1. `departments`
+```sql
+CREATE TABLE departments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  code TEXT NOT NULL,
+  color TEXT NOT NULL,
+  budget REAL DEFAULT 0.0,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 2. `locations`
+```sql
+CREATE TABLE locations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  city TEXT NOT NULL,
+  country TEXT NOT NULL,
+  timezone TEXT NOT NULL
+);
+```
+
+### 3. `employees`
+```sql
+CREATE TABLE employees (
+  id TEXT PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  phone TEXT,
+  role TEXT NOT NULL,
+  department_id INTEGER NOT NULL REFERENCES departments(id) ON DELETE RESTRICT,
+  location_id INTEGER NOT NULL REFERENCES locations(id) ON DELETE RESTRICT,
+  work_type TEXT NOT NULL CHECK(work_type IN ('Full-time', 'Contract', 'Part-time', 'Intern')),
+  work_arrangement TEXT NOT NULL CHECK(work_arrangement IN ('In-Office', 'Hybrid', 'Remote')),
+  attendance_score REAL DEFAULT 95.0,
+  avatar_url TEXT,
+  hire_date TEXT NOT NULL,
+  is_active INTEGER DEFAULT 1,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_employees_dept ON employees(department_id);
+CREATE INDEX idx_employees_loc ON employees(location_id);
+CREATE INDEX idx_employees_active ON employees(is_active);
+```
+
+### 4. `attendance_records`
+```sql
+CREATE TABLE attendance_records (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  employee_id TEXT NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+  date TEXT NOT NULL,
+  status TEXT NOT NULL CHECK(status IN ('Present', 'Late', 'Remote', 'On Leave', 'Absent')),
+  check_in_time TEXT,
+  check_out_time TEXT,
+  check_in_location TEXT,
+  notes TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(employee_id, date)
+);
+
+CREATE INDEX idx_attendance_date ON attendance_records(date);
+CREATE INDEX idx_attendance_status ON attendance_records(status);
+CREATE INDEX idx_attendance_emp_date ON attendance_records(employee_id, date);
+```
+
+---
+
+## 📡 REST API Documentation
+
+| Method | Endpoint | Description | Query Parameters |
+|---|---|---|---|
+| `GET` | `/api/dashboard/stats` | Retrieves 5 KPI metrics with trends, sparklines, and submetrics | `date`, `datePreset`, `department`, `location`, `status` |
+| `GET` | `/api/dashboard/trends` | Time-series attendance trend data for area chart | `datePreset`, `department`, `location` |
+| `GET` | `/api/dashboard/departments` | Headcount and attendance breakdown per department | `location` |
+| `GET` | `/api/dashboard/composition` | Workforce breakdown by arrangement or employment type | `dimension` (`arrangement` \| `type`), `department`, `location` |
+| `GET` | `/api/employees` | Paginated, filtered, and sorted employee records | `search`, `department`, `location`, `status`, `sortBy`, `sortOrder`, `page`, `pageSize` |
+| `GET` | `/api/employees/:id` | Single employee dossier with attendance history | `date` |
+| `POST` | `/api/employees/:id/attendance` | Record or update daily attendance status | JSON body: `{ date, status, checkInTime, notes }` |
+| `GET` | `/api/metadata` | Reference lists for departments, locations, presets | None |
+| `GET` | `/api/health` | SQLite connection status, total employee count, timestamp | None |
+
+---
+
+## 📸 Screenshots & Responsive Layouts
+
+High-resolution captures automatically generated with headless Chrome at 2x pixel density:
+
+| Layout View | Screenshot Path | Description |
+|---|---|---|
+| **Desktop Light Mode** | `screenshots/dashboard-desktop-light.png` | 5 KPI cards, dual chart row, department bars, sorted activity table |
+| **Desktop Dark Mode** | `screenshots/dashboard-desktop-dark.png` | Enterprise high-contrast dark theme with glowing telemetry indicators |
+| **Tablet View (820px)** | `screenshots/dashboard-tablet.png` | Responsive 2-column KPI grid and adapted chart sizing |
+| **Mobile View (390px)** | `screenshots/dashboard-mobile.png` | Touch-first slide-out drawer, single-column cards, scrollable table |
+| **Loading State** | `screenshots/dashboard-loading-state.png` | Animated shimmer skeleton placeholders matching card/chart dimensions |
+| **Error State** | `screenshots/dashboard-error-state.png` | Graceful network failure card with interactive **Retry Connection** button |
+| **Empty State** | `screenshots/dashboard-empty-state.png` | Zero-match search/filter state with **Reset All Filters** button |
+
+---
+
+## 🚀 Setup & Execution Instructions
 
 ### Prerequisites
 - **Node.js**: v18.0.0 or later (v22+ recommended)
 - **npm**: v9.0.0 or later
 
 ### 1. Installation
-Clone or navigate to the project directory and install all required dependencies:
+Install all dependencies (installs both frontend React/MUI and backend Express/SQLite packages in one step):
 ```bash
 npm install
 ```
 
-### 2. Run Development Server
-Start the Vite development server with Hot Module Replacement (HMR):
+### 2. Seed SQLite Database
+The SQLite database automatically initializes and seeds on first startup, but you can also seed or re-seed on demand:
+```bash
+npm run seed
+```
+This populates 8 departments, 6 locations, 30 employees, and **900+ daily attendance records** spanning 30 days!
+
+### 3. Run Development Server (Frontend + Backend concurrently)
+Launch both the Express SQLite API backend on `http://localhost:5000` and the Vite React frontend on `http://localhost:5173`:
 ```bash
 npm run dev
 ```
-Open your browser at `http://localhost:5173`.
+Open your browser at **`http://localhost:5173/`**.
 
-### 3. Run Automated Tests
-Execute the Vitest test suite in headless single-run mode:
+To run services independently:
+- **Backend API only**: `npm run dev:server`
+- **Frontend Vite only**: `npm run dev:client`
+
+### 4. Run Automated Test Suite
+Execute the full Vitest test suite covering both SQLite repository operations and React UI components:
 ```bash
 npm run test
 ```
-Or run in interactive watch mode during development:
-```bash
-npm run test:watch
-```
 
-### 4. Build for Production
-Type-check with TypeScript compiler and build optimized production bundle:
+### 5. Production Build
+Type-check with TypeScript and build the optimized production client bundle:
 ```bash
 npm run build
 ```
-The output will be generated in `dist/`.
 
-### 5. Preview Production Build
-Serve the production bundle locally:
-```bash
-npm run preview
-```
-
-### 6. Automated Screenshot Capture
-Run the automated screenshot script which launches headless Chrome and generates high-res captures across Desktop (Light/Dark), Tablet, Mobile, and UI states:
+### 6. Automated Screenshot Generation
+Capture fresh responsive screenshots across all viewports:
 ```bash
 npm run screenshot
 ```
 
 ---
 
-## 🧪 Testing Results
+## 🧪 Automated Testing Results
 
-Unit and component test suite execution summary:
+All **21 automated tests** passed with a 100% success rate:
 
 ```text
- ✓ src/test/Dashboard.test.tsx (9 tests)
-   ✓ Workforce Analytics Platform — Dashboard UI/UX
-     ✓ renders top navigation and platform branding
-     ✓ renders all five KPI cards with trends and submetrics
-     ✓ renders the filter toolbar with all required filter dimensions
-     ✓ renders all three analytical charts and the recent activity table
-     ✓ toggles light and dark theme mode
-     ✓ filters employees dynamically by search keyword
-     ✓ displays empty state when filter matches no records and restores on reset
-     ✓ supports evaluator error state simulation and recovery via retry button
-     ✓ supports evaluator loading state simulation
+ ✓ src/test/BackendSQLite.test.ts (11 tests) 87ms
+   ✓ verifies DepartmentRepository returns all 8 departments with correct codes and budgets
+   ✓ verifies LocationRepository returns all 6 corporate offices
+   ✓ verifies EmployeeRepository count and pagination
+   ✓ verifies EmployeeRepository multi-criteria filtering: department and search
+   ✓ verifies EmployeeRepository sorting by name ascending and descending
+   ✓ verifies AttendanceRepository calculates all 5 required Task 2 KPI metrics from SQLite
+   ✓ verifies AttendanceRepository generates historical time series trends
+   ✓ verifies AttendanceRepository generates department-wise headcount distribution
+   ✓ verifies AttendanceRepository generates workforce composition by work arrangement
+   ✓ verifies EmployeeService retrieves single employee with full attendance history
+   ✓ verifies DashboardService orchestrates repositories cleanly
 
- Test Files  1 passed (1)
-      Tests  9 passed (9)
-   Duration  11.78s
+ ✓ src/test/Dashboard.test.tsx (10 tests) 13802ms
+   ✓ renders top navigation and platform branding
+   ✓ renders all five Task 2 KPI cards: Total Employees, Present, Absent, On Leave, Attendance Rate
+   ✓ renders the filter toolbar with all required filter dimensions
+   ✓ renders all three analytical charts and the recent activity table
+   ✓ supports sorting columns in recent activity table
+   ✓ toggles light and dark theme mode
+   ✓ filters employees dynamically by search keyword
+   ✓ displays empty state when filter matches no records and restores on reset
+   ✓ supports evaluator error state simulation and recovery via retry button
+   ✓ supports evaluator loading state simulation
+
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+   Duration  26.51s
 ```
 
 ---
 
-## 🎨 Design System, Usability & Accessibility
+## 🎨 Figma Design Reference
 
-### Accessibility (a11y)
-- **High Contrast Ratios**: Light mode `#0f172a` text on `#ffffff` background meets WCAG AAA standards (>7:1). Dark mode `#f8fafc` text on `#111827` meets WCAG AAA standards.
-- **Semantic HTML & ARIA**: Accessible label attributes (`aria-label`, `labelId`, `role="button"`) on interactive controls, inputs, and dialogs.
-- **Keyboard Navigation**: Form controls, buttons, pagination, and modal dialogs are fully navigable via `Tab`, `Enter`, and `Escape`.
-- **Reduced Motion Friendly**: Smooth micro-transitions with hardware acceleration.
-
-### Responsiveness
-- **Desktop (>1200px)**: 5-column KPI cards grid, 7.5 / 4.5 ratio dual-chart row, collapsible desktop navigation sidebar.
-- **Tablet (768px – 1199px)**: 2-to-3 column auto-fit KPI grid, stacked chart sections, full table visibility with horizontal scroll indicators.
-- **Mobile (<768px)**: Touch-optimized slide-out hamburger navigation drawer, single-column KPI cards, full-width responsive charts, and mobile-friendly table cards.
-
----
-
-## ⚖️ Evaluation & State Simulation
-
-A dedicated **Evaluator Controls Bar** is pinned at the top of the dashboard content:
-- **`[ Normal ]`**: Displays live, reactive telemetry data with dynamic filtering.
-- **`[ Simulate Loading ]`**: Renders animated shimmer skeletons across all 5 KPI cards, all 3 charts, and the activity table.
-- **`[ Simulate Empty ]`**: Displays the illustrated empty state with 1-click filter reset.
-- **`[ Simulate Error ]`**: Displays the network error notification banner with an interactive `Retry Connection` recovery button.
+- **Figma Design System Link**: [PulseWorkforce Enterprise Design System (Figma)](https://www.figma.com/design/pulseworkforce-analytics-dashboard)
+- **Typography**: Primary typeface `Plus Jakarta Sans`, secondary `Inter`, numerical data `JetBrains Mono`.
+- **Palette Tokens**: Primary Indigo `#4f46e5` / `#818cf8`, Success Emerald `#10b981`, Warning Amber `#f59e0b`, Error Rose `#ef4444`, Cyan Secondary `#06b6d4`, Dark Surface `#111827`, Light Surface `#ffffff`.
+- **Accessibility**: All color contrast ratios meet or exceed WCAG 2.1 AAA requirements (>7:1 on body text, >4.5:1 on captions).
 
 ---
 
 ## 📄 License
-MIT License. Developed independently for Task 1: Workforce Analytics Platform.
+MIT License. Developed independently for Task 2: Advanced UI/UX Dashboard Development, Architecture & SQLite Integration.

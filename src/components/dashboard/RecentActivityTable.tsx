@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  TableSortLabel,
   Avatar,
   Chip,
   IconButton,
@@ -30,30 +31,55 @@ import SearchIcon from '@mui/icons-material/Search'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
-import type { Employee } from '../../types'
+import type { Employee, EmployeeSortField, SortOrder } from '../../types'
 import { STATUS_COLORS, DEPARTMENTS } from '../../data/mockData'
 import { EmployeeDetailModal } from './EmployeeDetailModal'
 
 interface RecentActivityTableProps {
   employees: Employee[]
   isLoading?: boolean
+  sortBy?: EmployeeSortField
+  sortOrder?: SortOrder
+  onSort?: (field: EmployeeSortField) => void
 }
 
 export const RecentActivityTable: React.FC<RecentActivityTableProps> = ({
   employees,
   isLoading = false,
+  sortBy: externalSortBy,
+  sortOrder: externalSortOrder,
+  onSort: externalOnSort,
 }) => {
   const theme = useTheme()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(6)
   const [tableSearch, setTableSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('All')
+  const [localSortBy, setLocalSortBy] = useState<EmployeeSortField>('name')
+  const [localSortOrder, setLocalSortOrder] = useState<SortOrder>('asc')
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Local table filters
+  const currentSortBy = externalSortBy || localSortBy
+  const currentSortOrder = externalSortOrder || localSortOrder
+
+  const handleSortClick = (field: EmployeeSortField) => {
+    if (externalOnSort) {
+      externalOnSort(field)
+    } else {
+      if (localSortBy === field) {
+        setLocalSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+      } else {
+        setLocalSortBy(field)
+        setLocalSortOrder('asc')
+      }
+    }
+    setPage(0)
+  }
+
+  // Local table filters & sorting
   const filteredRows = useMemo(() => {
-    return employees.filter((emp) => {
+    let result = employees.filter((emp) => {
       if (tableSearch.trim()) {
         const query = tableSearch.toLowerCase()
         const matches =
@@ -68,7 +94,22 @@ export const RecentActivityTable: React.FC<RecentActivityTableProps> = ({
       }
       return true
     })
-  }, [employees, tableSearch, statusFilter])
+
+    // If no external sorting was provided, apply local sorting
+    if (!externalOnSort) {
+      result = [...result].sort((a: any, b: any) => {
+        let aVal = a[currentSortBy] ?? ''
+        let bVal = b[currentSortBy] ?? ''
+        if (typeof aVal === 'string') aVal = aVal.toLowerCase()
+        if (typeof bVal === 'string') bVal = bVal.toLowerCase()
+        if (aVal < bVal) return currentSortOrder === 'asc' ? -1 : 1
+        if (aVal > bVal) return currentSortOrder === 'asc' ? 1 : -1
+        return 0
+      })
+    }
+
+    return result
+  }, [employees, tableSearch, statusFilter, currentSortBy, currentSortOrder, externalOnSort])
 
   const paginatedRows = useMemo(() => {
     return filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -168,7 +209,7 @@ export const RecentActivityTable: React.FC<RecentActivityTableProps> = ({
                 />
               </Box>
               <Typography variant="caption" color="text.secondary">
-                Real-time check-in telemetry, remote logins, and presence events
+                Real-time check-in telemetry, remote logins, and presence events (click column header to sort)
               </Typography>
             </Box>
 
@@ -231,11 +272,51 @@ export const RecentActivityTable: React.FC<RecentActivityTableProps> = ({
             <Table size="medium" sx={{ minWidth: 750 }}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Employee</TableCell>
-                  <TableCell>Department</TableCell>
-                  <TableCell>Location / Mode</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Check-in Time</TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={currentSortBy === 'name'}
+                      direction={currentSortBy === 'name' ? currentSortOrder : 'asc'}
+                      onClick={() => handleSortClick('name')}
+                    >
+                      Employee
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={currentSortBy === 'department'}
+                      direction={currentSortBy === 'department' ? currentSortOrder : 'asc'}
+                      onClick={() => handleSortClick('department')}
+                    >
+                      Department
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={currentSortBy === 'location'}
+                      direction={currentSortBy === 'location' ? currentSortOrder : 'asc'}
+                      onClick={() => handleSortClick('location')}
+                    >
+                      Location / Mode
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={currentSortBy === 'status'}
+                      direction={currentSortBy === 'status' ? currentSortOrder : 'asc'}
+                      onClick={() => handleSortClick('status')}
+                    >
+                      Status
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={currentSortBy === 'checkInTime'}
+                      direction={currentSortBy === 'checkInTime' ? currentSortOrder : 'asc'}
+                      onClick={() => handleSortClick('checkInTime')}
+                    >
+                      Check-in Time
+                    </TableSortLabel>
+                  </TableCell>
                   <TableCell>Last Active</TableCell>
                   <TableCell align="right">Action</TableCell>
                 </TableRow>

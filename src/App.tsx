@@ -37,6 +37,9 @@ const DashboardContent: React.FC = () => {
     donutDimension,
     setDonutDimension,
     setDatePreset,
+    sortBy,
+    sortOrder,
+    handleSort,
   } = useWorkforceData()
 
   const isLoading = uiState === 'loading'
@@ -127,6 +130,9 @@ const DashboardContent: React.FC = () => {
             <RecentActivityTable
               employees={employees}
               isLoading={isLoading}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              onSort={handleSort}
             />
           </Box>
         </>

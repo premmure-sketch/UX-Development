@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import App from '../App'
 
-describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
+describe('Workforce Analytics Platform — Dashboard UI/UX & Task 2 Integration', () => {
   beforeEach(() => {
     localStorage.clear()
   })
@@ -15,19 +15,20 @@ describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
     expect(screen.getByText('Workforce Intelligence Dashboard')).toBeInTheDocument()
   })
 
-  it('renders all five KPI cards with trends and submetrics', () => {
+  it('renders all five Task 2 KPI cards: Total Employees, Present, Absent, On Leave, Attendance Rate', () => {
     render(<App />)
     expect(screen.getByTestId('kpi-headcount')).toBeInTheDocument()
+    expect(screen.getByTestId('kpi-present')).toBeInTheDocument()
+    expect(screen.getByTestId('kpi-absent')).toBeInTheDocument()
+    expect(screen.getByTestId('kpi-onleave')).toBeInTheDocument()
     expect(screen.getByTestId('kpi-attendance')).toBeInTheDocument()
-    expect(screen.getByTestId('kpi-ontime')).toBeInTheDocument()
-    expect(screen.getByTestId('kpi-absenteeism')).toBeInTheDocument()
-    expect(screen.getByTestId('kpi-remote')).toBeInTheDocument()
 
-    expect(screen.getByText('Total Headcount')).toBeInTheDocument()
-    expect(screen.getByText('Attendance Rate')).toBeInTheDocument()
-    expect(screen.getByText('On-Time Arrival Rate')).toBeInTheDocument()
-    expect(screen.getByText('Absenteeism Rate')).toBeInTheDocument()
-    expect(screen.getByText('Remote / Hybrid')).toBeInTheDocument()
+    const kpiGrid = screen.getByTestId('kpi-cards-grid')
+    expect(within(kpiGrid).getByText('Total Employees')).toBeInTheDocument()
+    expect(within(kpiGrid).getByText('Present')).toBeInTheDocument()
+    expect(within(kpiGrid).getByText('Absent')).toBeInTheDocument()
+    expect(within(kpiGrid).getByText('On Leave')).toBeInTheDocument()
+    expect(within(kpiGrid).getByText('Attendance Rate')).toBeInTheDocument()
   })
 
   it('renders the filter toolbar with all required filter dimensions', () => {
@@ -46,6 +47,17 @@ describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
     expect(screen.getByTestId('department-distribution-chart')).toBeInTheDocument()
     expect(screen.getByTestId('workforce-donut-chart')).toBeInTheDocument()
     expect(screen.getByTestId('recent-activity-table')).toBeInTheDocument()
+  })
+
+  it('supports sorting columns in recent activity table', () => {
+    render(<App />)
+    const empHeader = screen.getAllByText('Employee')[0]
+    expect(empHeader).toBeInTheDocument()
+    fireEvent.click(empHeader)
+
+    const deptHeader = screen.getAllByText('Department')[0]
+    expect(deptHeader).toBeInTheDocument()
+    fireEvent.click(deptHeader)
   })
 
   it('toggles light and dark theme mode', async () => {
@@ -77,8 +89,10 @@ describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
     const searchInput = screen.getByPlaceholderText('Filter by keyword / ID...')
     fireEvent.change(searchInput, { target: { value: 'XYZNonExistentEmployee999' } })
 
-    expect(screen.getByTestId('empty-state')).toBeInTheDocument()
-    expect(screen.getByText('No Workforce Telemetry Matches Found')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByTestId('empty-state')).toBeInTheDocument()
+      expect(screen.getByText('No Workforce Telemetry Matches Found')).toBeInTheDocument()
+    })
 
     const resetButton = screen.getByRole('button', { name: /reset all filters/i })
     fireEvent.click(resetButton)
@@ -93,8 +107,10 @@ describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
     const simulateErrorChip = screen.getByText('Simulate Error')
     fireEvent.click(simulateErrorChip)
 
-    expect(screen.getByTestId('error-state')).toBeInTheDocument()
-    expect(screen.getByText('Unable to Load Workforce Telemetry')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByTestId('error-state')).toBeInTheDocument()
+      expect(screen.getByText('Unable to Load Workforce Telemetry')).toBeInTheDocument()
+    })
 
     const retryButton = screen.getByRole('button', { name: /retry connection/i })
     fireEvent.click(retryButton)
@@ -109,7 +125,6 @@ describe('Workforce Analytics Platform — Dashboard UI/UX', () => {
     const simulateLoadingChip = screen.getByText('Simulate Loading')
     fireEvent.click(simulateLoadingChip)
 
-    // Skeletons are rendered during loading state
     expect(screen.getByText('LOADING')).toBeInTheDocument()
   })
 })

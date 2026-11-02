@@ -3,7 +3,7 @@ import React from 'react'
 import { vi } from 'vitest'
 
 // Mock ResizeObserver for Recharts
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
