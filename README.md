@@ -50,11 +50,11 @@ For rapid evaluation, all 5 standard roles are seeded into SQLite (`server/data/
 
 | Role | Email Address | Password | Permissions Summary |
 |---|---|---|---|
-| **Admin** | `admin@stackly.com` | `Admin@12345` | Superuser: System administration, user provisioning, account unlock, full audit logs, all dashboards |
-| **HR** | `hr@stackly.com` | `HR@12345` | Human Resources: Employee onboarding, workforce telemetry, user unlocking, department analytics |
-| **Manager** | `manager@stackly.com` | `Manager@12345` | Department Management: Departmental KPI oversight, attendance approval, team analytics |
-| **Team Lead** | `teamlead@stackly.com` | `Lead@12345` | Shift & Team Leadership: Direct reports daily attendance logging, team roster views |
-| **Employee** | `employee@stackly.com` | `Employee@12345` | Self-Service: Personal check-in/out, biometric status, security posture, session control |
+| **Admin** | `admin@stackly.com` | `Admin@123456` | Superuser: System administration, user provisioning, account unlock, full audit logs, all dashboards |
+| **HR** | `hr@stackly.com` | `Hr@123456` | Human Resources: Employee onboarding, workforce telemetry, user unlocking, department analytics |
+| **Manager** | `manager@stackly.com` | `Manager@123456` | Department Management: Departmental KPI oversight, attendance approval, team analytics |
+| **Team Lead** | `teamlead@stackly.com` | `TeamLead@123456` | Shift & Team Leadership: Direct reports daily attendance logging, team roster views |
+| **Employee** | `employee@stackly.com` | `Employee@123456` | Self-Service: Personal check-in/out, biometric status, security posture, session control |
 
 ---
 
