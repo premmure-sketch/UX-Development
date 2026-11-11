@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { DashboardService } from '../services/DashboardService'
 import type { DashboardFilterOptions } from '../types'
 

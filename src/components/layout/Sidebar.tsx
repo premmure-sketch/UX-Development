@@ -25,6 +25,10 @@ import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
+import PolicyOutlinedIcon from '@mui/icons-material/PolicyOutlined'
+import FingerprintIcon from '@mui/icons-material/Fingerprint'
+import { useAuth } from '../../context/AuthContext'
 
 interface SidebarProps {
   mobileOpen: boolean
@@ -34,16 +38,6 @@ interface SidebarProps {
   activeNav: string
   onSelectNav: (key: string) => void
 }
-
-const NAV_ITEMS = [
-  { key: 'dashboard', label: 'Dashboard', icon: DashboardOutlinedIcon, badge: 'Live' },
-  { key: 'analytics', label: 'Analytics & Trends', icon: AssessmentOutlinedIcon },
-  { key: 'attendance', label: 'Attendance Logs', icon: AccessTimeOutlinedIcon },
-  { key: 'departments', label: 'Departments', icon: CorporateFareOutlinedIcon },
-  { key: 'leave', label: 'Leave Management', icon: EventAvailableOutlinedIcon },
-  { key: 'reports', label: 'Reports & Exports', icon: DescriptionOutlinedIcon },
-  { key: 'settings', label: 'Settings', icon: TuneOutlinedIcon },
-]
 
 export const Sidebar: React.FC<SidebarProps> = ({
   mobileOpen,
@@ -55,6 +49,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
+  const { user } = useAuth()
+  const role = user?.role || 'Admin'
+
+  const navItems = [
+    { key: 'dashboard', label: 'Dashboard', icon: DashboardOutlinedIcon, badge: 'Live' },
+    ...(role === 'Employee'
+      ? [{ key: 'my-service', label: 'My Self-Service', icon: FingerprintIcon, badge: 'Active' }]
+      : []),
+    { key: 'analytics', label: 'Analytics & Trends', icon: AssessmentOutlinedIcon },
+    { key: 'attendance', label: 'Attendance Logs', icon: AccessTimeOutlinedIcon },
+    { key: 'departments', label: 'Departments', icon: CorporateFareOutlinedIcon },
+    { key: 'leave', label: 'Leave Management', icon: EventAvailableOutlinedIcon },
+    ...(role === 'Admin' || role === 'HR'
+      ? [{ key: 'users', label: role === 'Admin' ? 'User Administration' : 'User Directory', icon: SupervisorAccountOutlinedIcon }]
+      : []),
+    ...(role === 'Admin'
+      ? [{ key: 'audit', label: 'Audit Trail (Logs)', icon: PolicyOutlinedIcon }]
+      : []),
+    { key: 'reports', label: 'Reports & Exports', icon: DescriptionOutlinedIcon },
+    { key: 'settings', label: 'Settings', icon: TuneOutlinedIcon },
+  ]
 
   const drawerWidth = isCollapsed ? 76 : 260
 
@@ -106,7 +121,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Nav items */}
       <List sx={{ px: 1.5, py: 2, flex: 1 }}>
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const Icon = item.icon
           const isActive = activeNav === item.key
 

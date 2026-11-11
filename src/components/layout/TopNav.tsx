@@ -22,14 +22,27 @@ import SearchIcon from '@mui/icons-material/Search'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutlined'
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined'
 import HubIcon from '@mui/icons-material/Hub'
 import CircleIcon from '@mui/icons-material/Circle'
+import SecurityIcon from '@mui/icons-material/Security'
+import DevicesIcon from '@mui/icons-material/Devices'
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz'
 import { useThemeContext } from '../../theme/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { MfaSetupDialog } from '../auth/MfaSetupDialog'
+import { SessionManagerDialog } from '../auth/SessionManagerDialog'
+import type { AppRole } from '../../types/auth'
 import { MOCK_NOTIFICATIONS } from '../../data/mockData'
+
+const ROLE_COLORS: Record<AppRole, string> = {
+  Admin: '#8b5cf6',
+  HR: '#10b981',
+  Manager: '#3b82f6',
+  'Team Lead': '#f59e0b',
+  Employee: '#06b6d4',
+}
 
 interface TopNavProps {
   onToggleSidebarMobile: () => void
@@ -44,10 +57,19 @@ export const TopNav: React.FC<TopNavProps> = ({
 }) => {
   const theme = useTheme()
   const { mode, toggleTheme } = useThemeContext()
+  const { user, logout, switchDemoRole } = useAuth()
 
   // User menu state
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
   const isUserMenuOpen = Boolean(userAnchorEl)
+
+  // Role switch menu state
+  const [roleAnchorEl, setRoleAnchorEl] = useState<null | HTMLElement>(null)
+  const isRoleMenuOpen = Boolean(roleAnchorEl)
+
+  // Dialog states
+  const [mfaDialogOpen, setMfaDialogOpen] = useState(false)
+  const [sessionsDialogOpen, setSessionsDialogOpen] = useState(false)
 
   // Notification menu state
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null)
@@ -59,6 +81,11 @@ export const TopNav: React.FC<TopNavProps> = ({
   const handleMarkAllRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })))
   }
+
+  const currentUserRole: AppRole = user?.role || 'Admin'
+  const currentUserName = user?.name || 'Dr. Alistair Vance'
+  const currentUserEmail = user?.email || 'admin@stackly.com'
+  const roleColor = ROLE_COLORS[currentUserRole] || '#8b5cf6'
 
   return (
     <AppBar
@@ -326,9 +353,63 @@ export const TopNav: React.FC<TopNavProps> = ({
             </Box>
           </Menu>
 
+          {/* Quick Role Switcher Pill for Testing/Evaluation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<SwapHorizIcon sx={{ fontSize: 16 }} />}
+              onClick={(e) => setRoleAnchorEl(e.currentTarget)}
+              sx={{
+                borderColor: `${roleColor}60`,
+                color: roleColor,
+                fontWeight: 700,
+                fontSize: '0.75rem',
+                textTransform: 'none',
+                borderRadius: 2,
+                py: 0.5,
+                px: 1.25,
+                bgcolor: `${roleColor}10`,
+                '&:hover': {
+                  bgcolor: `${roleColor}20`,
+                  borderColor: roleColor,
+                },
+              }}
+            >
+              Role: {currentUserRole}
+            </Button>
+            <Menu
+              anchorEl={roleAnchorEl}
+              open={isRoleMenuOpen}
+              onClose={() => setRoleAnchorEl(null)}
+              slotProps={{ paper: { sx: { width: 220, borderRadius: 2 } } }}
+            >
+              <Box sx={{ px: 2, py: 1, borderBottom: `1px solid ${theme.palette.divider}` }}>
+                <Typography variant="caption" sx={{ fontWeight: 800, color: 'text.secondary', textTransform: 'uppercase' }}>
+                  Switch Active Role (RBAC)
+                </Typography>
+              </Box>
+              {(['Admin', 'HR', 'Manager', 'Team Lead', 'Employee'] as AppRole[]).map((r) => (
+                <MenuItem
+                  key={r}
+                  selected={currentUserRole === r}
+                  onClick={() => {
+                    switchDemoRole(r)
+                    setRoleAnchorEl(null)
+                  }}
+                  sx={{ fontWeight: currentUserRole === r ? 800 : 500 }}
+                >
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: ROLE_COLORS[r], mr: 1.5 }} />
+                  {r}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
           {/* User Profile Avatar & Menu */}
           <Box
             onClick={(e) => setUserAnchorEl(e.currentTarget)}
+            data-testid="user-menu-button"
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -342,23 +423,32 @@ export const TopNav: React.FC<TopNavProps> = ({
             }}
           >
             <Avatar
-              alt="Dr. Alistair Vance"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              alt={currentUserName}
+              src={
+                currentUserRole === 'Admin'
+                  ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+                  : undefined
+              }
               sx={{
                 width: 36,
                 height: 36,
                 border: '2px solid',
-                borderColor: 'primary.main',
+                borderColor: roleColor,
+                bgcolor: roleColor,
+                fontSize: '0.85rem',
+                fontWeight: 800,
               }}
             >
-              AV
+              {currentUserName.slice(0, 2).toUpperCase()}
             </Avatar>
             <Box sx={{ display: { xs: 'none', sm: 'block' }, textAlign: 'left' }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
-                Dr. Alistair Vance
+                {currentUserName}
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.71875rem' }}>
-                VP of People Operations
+                {currentUserRole === 'Admin'
+                  ? 'VP of People Operations'
+                  : `${currentUserRole} • Workforce`}
               </Typography>
             </Box>
           </Box>
@@ -373,7 +463,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             slotProps={{
               paper: {
                 sx: {
-                  width: 240,
+                  width: 260,
                   mt: 1,
                   borderRadius: 3,
                   p: 0.5,
@@ -383,36 +473,79 @@ export const TopNav: React.FC<TopNavProps> = ({
           >
             <Box sx={{ px: 2, py: 1.5 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                Dr. Alistair Vance
+                {currentUserName}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
-                alistair.vance@stackly.io
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', wordBreak: 'break-all' }}>
+                {currentUserEmail}
               </Typography>
-              <Box sx={{ mt: 1 }}>
+              <Box sx={{ mt: 1, display: 'flex', gap: 0.5, alignItems: 'center' }}>
                 <Chip
                   icon={<CheckCircleOutlineIcon sx={{ fontSize: '13px !important' }} />}
-                  label="Executive Admin"
+                  label={currentUserRole}
                   size="small"
-                  color="success"
-                  sx={{ height: 20, fontSize: '0.65rem' }}
+                  sx={{
+                    height: 20,
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    bgcolor: `${roleColor}18`,
+                    color: roleColor,
+                    borderColor: roleColor,
+                  }}
+                  variant="outlined"
                 />
+                {user?.isMfaEnabled && (
+                  <Chip
+                    icon={<SecurityIcon sx={{ fontSize: '11px !important' }} />}
+                    label="2FA On"
+                    size="small"
+                    color="success"
+                    sx={{ height: 20, fontSize: '0.65rem', fontWeight: 700 }}
+                  />
+                )}
               </Box>
             </Box>
             <Divider />
-            <MenuItem onClick={() => setUserAnchorEl(null)}>
-              <ListItemIcon><PersonOutlineIcon fontSize="small" /></ListItemIcon>
-              My Profile
+            <MenuItem
+              onClick={() => {
+                setUserAnchorEl(null)
+                setMfaDialogOpen(true)
+              }}
+            >
+              <ListItemIcon>
+                <SecurityIcon fontSize="small" color="primary" />
+              </ListItemIcon>
+              Two-Factor Auth (2FA)
             </MenuItem>
-            <MenuItem onClick={() => setUserAnchorEl(null)}>
-              <ListItemIcon><SettingsOutlinedIcon fontSize="small" /></ListItemIcon>
-              Platform Settings
+            <MenuItem
+              onClick={() => {
+                setUserAnchorEl(null)
+                setSessionsDialogOpen(true)
+              }}
+            >
+              <ListItemIcon>
+                <DevicesIcon fontSize="small" color="primary" />
+              </ListItemIcon>
+              Active Device Sessions
             </MenuItem>
             <Divider />
-            <MenuItem onClick={() => setUserAnchorEl(null)} sx={{ color: 'error.main' }}>
-              <ListItemIcon><LogoutOutlinedIcon fontSize="small" sx={{ color: 'error.main' }} /></ListItemIcon>
+            <MenuItem
+              onClick={() => {
+                setUserAnchorEl(null)
+                logout()
+              }}
+              data-testid="menu-item-signout"
+              sx={{ color: 'error.main' }}
+            >
+              <ListItemIcon>
+                <LogoutOutlinedIcon fontSize="small" sx={{ color: 'error.main' }} />
+              </ListItemIcon>
               Sign Out
             </MenuItem>
           </Menu>
+
+          {/* MFA & Sessions Dialogs */}
+          <MfaSetupDialog open={mfaDialogOpen} onClose={() => setMfaDialogOpen(false)} />
+          <SessionManagerDialog open={sessionsDialogOpen} onClose={() => setSessionsDialogOpen(false)} />
         </Box>
       </Toolbar>
     </AppBar>

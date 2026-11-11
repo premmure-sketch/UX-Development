@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { DepartmentRepository } from '../repositories/DepartmentRepository'
 import { LocationRepository } from '../repositories/LocationRepository'
 import { EmployeeRepository } from '../repositories/EmployeeRepository'

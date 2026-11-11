@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { EmployeeService } from '../services/EmployeeService'
 import type { EmployeeFilterOptions } from '../types'
 
@@ -33,7 +33,7 @@ export class EmployeeController {
 
   getEmployeeById = (req: Request, res: Response): void => {
     try {
-      const id = req.params.id
+      const id = req.params.id as string
       const date = typeof req.query.date === 'string' ? req.query.date : '2026-11-02'
       const { employee, history } = this.service.getEmployeeById(id, date)
 
@@ -51,7 +51,7 @@ export class EmployeeController {
 
   updateAttendance = (req: Request, res: Response): void => {
     try {
-      const id = req.params.id
+      const id = req.params.id as string
       const { date = '2026-11-02', status, checkInTime, notes } = req.body
 
       if (!status) {
