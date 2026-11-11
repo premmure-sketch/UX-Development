@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box, Container } from '@mui/material'
 import { TopNav } from './TopNav'
 import { Sidebar } from './Sidebar'
+import { useAuth } from '../../context/AuthContext'
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -16,7 +17,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [activeNav, setActiveNav] = useState('dashboard')
+  const { activeNav, setActiveNav } = useAuth()
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)

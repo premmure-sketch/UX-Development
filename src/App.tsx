@@ -5,7 +5,13 @@ import {
   Grid,
 } from '@mui/material'
 import { ThemeContextProvider } from './theme/ThemeContext'
+import { AuthProvider, useAuth } from './context/AuthContext'
 import { AppLayout } from './components/layout/AppLayout'
+import { LoginView } from './components/auth/LoginView'
+import { UserManagementView } from './components/admin/UserManagementView'
+import { AuditLogsView } from './components/admin/AuditLogsView'
+import { EmployeeSelfServiceView } from './components/employee/EmployeeSelfServiceView'
+import { AccessDeniedPage } from './components/common/AccessDeniedPage'
 import { StateControls } from './components/common/StateControls'
 import { EmptyState } from './components/common/EmptyState'
 import { ErrorState } from './components/common/ErrorState'
@@ -18,6 +24,13 @@ import { RecentActivityTable } from './components/dashboard/RecentActivityTable'
 import { useWorkforceData } from './hooks/useWorkforceData'
 
 const DashboardContent: React.FC = () => {
+  const {
+    isAuthenticated,
+    activeNav,
+    setActiveNav,
+    hasRole,
+  } = useAuth()
+
   const {
     filters,
     updateFilter,
@@ -42,6 +55,11 @@ const DashboardContent: React.FC = () => {
     handleSort,
   } = useWorkforceData()
 
+  // Unauthenticated screen
+  if (!isAuthenticated) {
+    return <LoginView />
+  }
+
   const isLoading = uiState === 'loading'
 
   return (
@@ -49,92 +67,127 @@ const DashboardContent: React.FC = () => {
       searchValue={filters.search}
       onSearchChange={(val) => updateFilter('search', val)}
     >
-      {/* Dashboard Page Header */}
-      <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 1 }}>
-          <Box>
-            <Typography variant="h4" sx={{ fontWeight: 800, letterSpacing: '-0.025em', mb: 0.5 }}>
-              Workforce Intelligence Dashboard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Real-time enterprise attendance telemetry, headcounts, department distribution, and remote logs
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-
-      {/* Evaluator State Controls Bar */}
-      <StateControls
-        currentState={uiState}
-        onSimulateLoading={simulateLoading}
-        onSimulateError={simulateError}
-        onSimulateEmpty={simulateEmpty}
-        onResetState={resetState}
-      />
-
-      {/* Global Filter Toolbar */}
-      <FilterBar
-        filters={filters}
-        onFilterChange={updateFilter}
-        onResetFilters={resetFilters}
-        activeCount={activeFilterCount}
-      />
-
-      {/* Conditional Rendering of States */}
-      {uiState === 'error' ? (
-        <ErrorState
-          message={errorMessage}
-          onRetry={resetState}
-        />
-      ) : uiState === 'empty' ? (
-        <EmptyState
-          title="No Workforce Telemetry Matches Found"
-          description="None of the employees match your active search, department, location, or status filters. Reset your filters to restore live analytics."
-          onReset={resetFilters}
-        />
+      {/* View Switching based on activeNav and RBAC */}
+      {activeNav === 'users' ? (
+        hasRole(['Admin', 'HR']) ? (
+          <UserManagementView />
+        ) : (
+          <AccessDeniedPage
+            requiredRoles={['Admin', 'HR']}
+            onReturn={() => setActiveNav('dashboard')}
+          />
+        )
+      ) : activeNav === 'audit' ? (
+        hasRole(['Admin']) ? (
+          <AuditLogsView />
+        ) : (
+          <AccessDeniedPage
+            requiredRoles={['Admin']}
+            requiredPermission="audit:read"
+            onReturn={() => setActiveNav('dashboard')}
+          />
+        )
+      ) : activeNav === 'my-service' ? (
+        <EmployeeSelfServiceView />
       ) : (
+        /* Default: Workforce Intelligence Dashboard */
         <>
-          {/* Section 1: Five KPI Cards */}
-          <KpiCardsGrid kpiData={kpiData} isLoading={isLoading} />
-
-          {/* Section 2: Charts Row 1 (Attendance Trend Chart + Workforce Donut Chart) */}
-          <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid size={{ xs: 12, lg: 7.5 }}>
-              <AttendanceTrendChart
-                data={trendData}
-                currentPreset={filters.datePreset}
-                onPresetChange={setDatePreset}
-                isLoading={isLoading}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, lg: 4.5 }}>
-              <WorkforceDonutChart
-                data={workforceBreakdown}
-                dimension={donutDimension}
-                onDimensionChange={setDonutDimension}
-                isLoading={isLoading}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Section 3: Department-Wise Distribution Bar Chart */}
+          {/* Dashboard Page Header */}
           <Box sx={{ mb: 3 }}>
-            <DepartmentDistributionChart
-              data={departmentData}
-              isLoading={isLoading}
-            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                justifyContent: 'space-between',
+                alignItems: { xs: 'flex-start', sm: 'center' },
+                gap: 1,
+              }}
+            >
+              <Box>
+                <Typography variant="h4" sx={{ fontWeight: 800, letterSpacing: '-0.025em', mb: 0.5 }}>
+                  Workforce Intelligence Dashboard
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Real-time enterprise attendance telemetry, headcounts, department distribution, and remote logs
+                </Typography>
+              </Box>
+            </Box>
           </Box>
 
-          {/* Section 4: Recent Employee Activity Table */}
-          <Box sx={{ mb: 4 }}>
-            <RecentActivityTable
-              employees={employees}
-              isLoading={isLoading}
-              sortBy={sortBy}
-              sortOrder={sortOrder}
-              onSort={handleSort}
+          {/* Evaluator State Controls Bar */}
+          <StateControls
+            currentState={uiState}
+            onSimulateLoading={simulateLoading}
+            onSimulateError={simulateError}
+            onSimulateEmpty={simulateEmpty}
+            onResetState={resetState}
+          />
+
+          {/* Global Filter Toolbar */}
+          <FilterBar
+            filters={filters}
+            onFilterChange={updateFilter}
+            onResetFilters={resetFilters}
+            activeCount={activeFilterCount}
+          />
+
+          {/* Conditional Rendering of States */}
+          {uiState === 'error' ? (
+            <ErrorState
+              message={errorMessage}
+              onRetry={resetState}
             />
-          </Box>
+          ) : uiState === 'empty' ? (
+            <EmptyState
+              title="No Workforce Telemetry Matches Found"
+              description="None of the employees match your active search, department, location, or status filters. Reset your filters to restore live analytics."
+              onReset={resetFilters}
+            />
+          ) : (
+            <>
+              {/* Section 1: Five KPI Cards */}
+              <KpiCardsGrid kpiData={kpiData} isLoading={isLoading} />
+
+              {/* Section 2: Charts Row 1 (Attendance Trend Chart + Workforce Donut Chart) */}
+              <Grid container spacing={3} sx={{ mb: 3 }}>
+                <Grid size={{ xs: 12, lg: 7.5 }}>
+                  <AttendanceTrendChart
+                    data={trendData}
+                    currentPreset={filters.datePreset}
+                    onPresetChange={setDatePreset}
+                    isLoading={isLoading}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, lg: 4.5 }}>
+                  <WorkforceDonutChart
+                    data={workforceBreakdown}
+                    dimension={donutDimension}
+                    onDimensionChange={setDonutDimension}
+                    isLoading={isLoading}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* Section 3: Department-Wise Distribution Bar Chart */}
+              <Box sx={{ mb: 3 }}>
+                <DepartmentDistributionChart
+                  data={departmentData}
+                  isLoading={isLoading}
+                />
+              </Box>
+
+              {/* Section 4: Recent Employee Activity Table */}
+              <Box sx={{ mb: 4 }}>
+                <RecentActivityTable
+                  employees={employees}
+                  isLoading={isLoading}
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                  onSort={handleSort}
+                />
+              </Box>
+            </>
+          )}
         </>
       )}
     </AppLayout>
@@ -144,7 +197,9 @@ const DashboardContent: React.FC = () => {
 export default function App() {
   return (
     <ThemeContextProvider>
-      <DashboardContent />
+      <AuthProvider>
+        <DashboardContent />
+      </AuthProvider>
     </ThemeContextProvider>
   )
 }
