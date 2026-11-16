@@ -76,13 +76,13 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       locMap.set(l.name, Number(res.lastInsertRowid))
     }
 
-    // 3. Employees (All Indian Names)
+    // 3. Employees (All Indian Names - Caste Neutral, Secular, No Profile Images)
     const employeesList = [
       {
         id: 'EMP-1001',
         firstName: 'Priya',
-        lastName: 'Sharma',
-        email: 'priya.sharma@stackly.io',
+        lastName: 'Kumar',
+        email: 'priya.kumar@stackly.io',
         phone: '+91 98450 12049',
         role: 'VP of Engineering',
         dept: 'Engineering',
@@ -90,7 +90,6 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
         workType: 'Full-time',
         arrangement: 'Hybrid',
         score: 99.2,
-        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
         hireDate: '2022-03-15',
         todayStatus: 'Present',
         todayCheckIn: '08:42 AM',
@@ -100,8 +99,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1002',
         firstName: 'Arjun',
-        lastName: 'Mehta',
-        email: 'arjun.mehta@stackly.io',
+        lastName: 'Patel',
+        email: 'arjun.patel@stackly.io',
         phone: '+91 98450 11102',
         role: 'Principal Cloud Architect',
         dept: 'Engineering',
@@ -109,7 +108,6 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
         workType: 'Full-time',
         arrangement: 'In-Office',
         score: 98.4,
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
         hireDate: '2021-06-01',
         todayStatus: 'Present',
         todayCheckIn: '08:55 AM',
@@ -119,8 +117,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1003',
         firstName: 'Ananya',
-        lastName: 'Iyer',
-        email: 'ananya.iyer@stackly.io',
+        lastName: 'Rao',
+        email: 'ananya.rao@stackly.io',
         phone: '+91 98200 09412',
         role: 'Staff Product Designer',
         dept: 'Product',
@@ -128,7 +126,6 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
         workType: 'Full-time',
         arrangement: 'Hybrid',
         score: 96.8,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
         hireDate: '2023-01-10',
         todayStatus: 'Present',
         todayCheckIn: '09:04 AM',
@@ -156,8 +153,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1005',
         firstName: 'Deepika',
-        lastName: 'Nair',
-        email: 'deepika.nair@stackly.io',
+        lastName: 'Sen',
+        email: 'deepika.sen@stackly.io',
         phone: '+91 98450 50143',
         role: 'Director of Talent Acquisition',
         dept: 'Human Resources',
@@ -174,8 +171,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1006',
         firstName: 'Aditya',
-        lastName: 'Kapoor',
-        email: 'aditya.kapoor@stackly.io',
+        lastName: 'Roy',
+        email: 'aditya.roy@stackly.io',
         phone: '+91 98200 50177',
         role: 'Enterprise Account Executive',
         dept: 'Sales',
@@ -192,8 +189,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1007',
         firstName: 'Sneha',
-        lastName: 'Reddy',
-        email: 'sneha.reddy@stackly.io',
+        lastName: 'Patel',
+        email: 'sneha.patel@stackly.io',
         phone: '+91 94400 90123',
         role: 'Lead Data Scientist',
         dept: 'Engineering',
@@ -210,8 +207,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1008',
         firstName: 'Vikram',
-        lastName: 'Malhotra',
-        email: 'vikram.malhotra@stackly.io',
+        lastName: 'Kumar',
+        email: 'vikram.kumar@stackly.io',
         phone: '+91 98230 12345',
         role: 'Product Operations Manager',
         dept: 'Product',
@@ -228,8 +225,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1009',
         firstName: 'Kavya',
-        lastName: 'Sengupta',
-        email: 'kavya.sengupta@stackly.io',
+        lastName: 'Sen',
+        email: 'kavya.sen@stackly.io',
         phone: '+91 98110 09881',
         role: 'Content Strategy Lead',
         dept: 'Marketing',
@@ -246,8 +243,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1010',
         firstName: 'Rajesh',
-        lastName: 'Kulkarni',
-        email: 'rajesh.kulkarni@stackly.io',
+        lastName: 'Rao',
+        email: 'rajesh.rao@stackly.io',
         phone: '+91 98200 50188',
         role: 'Senior Financial Analyst',
         dept: 'Finance',
@@ -282,8 +279,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1012',
         firstName: 'Tariq',
-        lastName: 'Mohammed',
-        email: 'tariq.mohammed@stackly.io',
+        lastName: 'Khan',
+        email: 'tariq.khan@stackly.io',
         phone: '+91 94400 70773',
         role: 'Security & Compliance Analyst',
         dept: 'Operations',
@@ -300,8 +297,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1013',
         firstName: 'Sunita',
-        lastName: 'Deshmukh',
-        email: 'sunita.deshmukh@stackly.io',
+        lastName: 'Verma',
+        email: 'sunita.verma@stackly.io',
         phone: '+91 98230 50122',
         role: 'Customer Support Lead',
         dept: 'Customer Support',
@@ -318,8 +315,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1014',
         firstName: 'Abhishek',
-        lastName: 'Mukherjee',
-        email: 'abhishek.mukherjee@stackly.io',
+        lastName: 'Roy',
+        email: 'abhishek.roy@stackly.io',
         phone: '+91 98110 50164',
         role: 'Growth Marketing Specialist',
         dept: 'Marketing',
@@ -336,8 +333,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1015',
         firstName: 'Pooja',
-        lastName: 'Joshi',
-        email: 'pooja.joshi@stackly.io',
+        lastName: 'Kumar',
+        email: 'pooja.kumar@stackly.io',
         phone: '+91 98230 78912',
         role: 'HR People Partner',
         dept: 'Human Resources',
@@ -372,8 +369,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1017',
         firstName: 'Rhea',
-        lastName: 'Pillai',
-        email: 'rhea.pillai@stackly.io',
+        lastName: 'Rao',
+        email: 'rhea.rao@stackly.io',
         phone: '+91 98200 14402',
         role: 'SDR Team Lead',
         dept: 'Sales',
@@ -408,8 +405,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1019',
         firstName: 'Shruti',
-        lastName: 'Menon',
-        email: 'shruti.menon@stackly.io',
+        lastName: 'Sen',
+        email: 'shruti.sen@stackly.io',
         phone: '+91 98110 05551',
         role: 'Brand & Creative Director',
         dept: 'Marketing',
@@ -426,8 +423,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1020',
         firstName: 'Harish',
-        lastName: 'Sundaram',
-        email: 'harish.sundaram@stackly.io',
+        lastName: 'Chand',
+        email: 'harish.chand@stackly.io',
         phone: '+91 98450 50100',
         role: 'Chief Compliance Officer',
         dept: 'Operations',
@@ -462,8 +459,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1022',
         firstName: 'Manish',
-        lastName: 'Chawla',
-        email: 'manish.chawla@stackly.io',
+        lastName: 'Kumar',
+        email: 'manish.kumar@stackly.io',
         phone: '+91 98200 50155',
         role: 'Billing & Payroll Specialist',
         dept: 'Finance',
@@ -480,8 +477,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1023',
         firstName: 'Tanvi',
-        lastName: 'Bhatia',
-        email: 'tanvi.bhatia@stackly.io',
+        lastName: 'Rao',
+        email: 'tanvi.rao@stackly.io',
         phone: '+91 98450 15599',
         role: 'Product Manager - Analytics',
         dept: 'Product',
@@ -498,8 +495,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1024',
         firstName: 'Nikhil',
-        lastName: 'Saxena',
-        email: 'nikhil.saxena@stackly.io',
+        lastName: 'Verma',
+        email: 'nikhil.verma@stackly.io',
         phone: '+91 98110 04442',
         role: 'Customer Success Manager',
         dept: 'Customer Support',
@@ -516,8 +513,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1025',
         firstName: 'Deepak',
-        lastName: 'Joshi',
-        email: 'deepak.joshi@stackly.io',
+        lastName: 'Kumar',
+        email: 'deepak.kumar@stackly.io',
         phone: '+91 99880 50176',
         role: 'Backend Systems Engineer',
         dept: 'Engineering',
@@ -552,8 +549,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1027',
         firstName: 'Alok',
-        lastName: 'Tiwari',
-        email: 'alok.tiwari@stackly.io',
+        lastName: 'Kumar',
+        email: 'alok.kumar@stackly.io',
         phone: '+91 94400 98765',
         role: 'IT Infrastructure Lead',
         dept: 'Operations',
@@ -570,8 +567,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1028',
         firstName: 'Gayatri',
-        lastName: 'Swaminathan',
-        email: 'gayatri.swaminathan@stackly.io',
+        lastName: 'Rao',
+        email: 'gayatri.rao@stackly.io',
         phone: '+91 98450 90888',
         role: 'International Expansion Lead',
         dept: 'Sales',
@@ -588,8 +585,8 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
       {
         id: 'EMP-1029',
         firstName: 'Siddharth',
-        lastName: 'Nambiar',
-        email: 'siddharth.nambiar@stackly.io',
+        lastName: 'Patel',
+        email: 'siddharth.patel@stackly.io',
         phone: '+91 98450 16678',
         role: 'Frontend UI/UX Intern',
         dept: 'Engineering',
@@ -638,7 +635,7 @@ export function seedDatabase(db?: Database, force: boolean = false): void {
         emp.workType,
         emp.arrangement,
         emp.score,
-        emp.avatar || null,
+        null, // Profile images removed
         emp.hireDate
       )
     }

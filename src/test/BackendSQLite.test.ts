@@ -61,7 +61,7 @@ describe('Backend SQLite Integration & Repository Pattern Tests', () => {
 
     const searchResult = empRepo.findAll({ search: 'Priya' })
     expect(searchResult.items.length).toBe(1)
-    expect(searchResult.items[0].name).toBe('Priya Sharma')
+    expect(searchResult.items[0].name).toBe('Priya Kumar')
     expect(searchResult.items[0].id).toBe('EMP-1001')
   })
 
@@ -123,7 +123,7 @@ describe('Backend SQLite Integration & Repository Pattern Tests', () => {
     const { employee, history } = service.getEmployeeById('EMP-1001')
     expect(employee).not.toBeNull()
     expect(employee?.id).toBe('EMP-1001')
-    expect(employee?.name).toBe('Priya Sharma')
+    expect(employee?.name).toBe('Priya Kumar')
     expect(history.length).toBeGreaterThan(0)
   })
 

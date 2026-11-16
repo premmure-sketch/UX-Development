@@ -13,7 +13,6 @@ import {
   Button,
 } from '@mui/material'
 import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import { DepartmentDistributionChart } from './DepartmentDistributionChart'
 import type { DepartmentDistributionPoint, Employee } from '../../types'
@@ -26,15 +25,15 @@ interface DepartmentsViewProps {
   onSelectDepartmentFilter?: (deptName: string) => void
 }
 
-const DEPT_METADATA: Record<string, { budget: string; lead: string; leadRole: string; iconColor: string }> = {
-  Engineering: { budget: '₹1,45,00,000', lead: 'Priya Sharma', leadRole: 'VP of Engineering', iconColor: '#6366f1' },
-  Product: { budget: '₹95,00,000', lead: 'Ananya Iyer', leadRole: 'Head of Product', iconColor: '#8b5cf6' },
-  Sales: { budget: '₹1,20,00,000', lead: 'Aditya Kapoor', leadRole: 'Director of Global Sales', iconColor: '#06b6d4' },
-  Marketing: { budget: '₹85,00,000', lead: 'Kavya Sengupta', leadRole: 'VP of Marketing', iconColor: '#ec4899' },
-  'Human Resources': { budget: '₹55,00,000', lead: 'Deepika Nair', leadRole: 'Chief People Officer', iconColor: '#f59e0b' },
-  Finance: { budget: '₹75,00,000', lead: 'Rajesh Kulkarni', leadRole: 'Director of Finance', iconColor: '#10b981' },
-  Operations: { budget: '₹68,00,000', lead: 'Harish Sundaram', leadRole: 'Operations Lead', iconColor: '#3b82f6' },
-  'Customer Support': { budget: '₹52,00,000', lead: 'Sunita Deshmukh', leadRole: 'Support Manager', iconColor: '#14b8a6' },
+const DEPT_METADATA: Record<string, { lead: string; leadRole: string; iconColor: string }> = {
+  Engineering: { lead: 'Priya Kumar', leadRole: 'VP of Engineering', iconColor: '#6366f1' },
+  Product: { lead: 'Ananya Rao', leadRole: 'Head of Product', iconColor: '#8b5cf6' },
+  Sales: { lead: 'Aditya Roy', leadRole: 'Director of Global Sales', iconColor: '#06b6d4' },
+  Marketing: { lead: 'Kavya Paul', leadRole: 'VP of Marketing', iconColor: '#ec4899' },
+  'Human Resources': { lead: 'Deepika Sen', leadRole: 'Chief People Officer', iconColor: '#f59e0b' },
+  Finance: { lead: 'Rajesh Prasad', leadRole: 'Director of Finance', iconColor: '#10b981' },
+  Operations: { lead: 'Harish Chand', leadRole: 'Operations Lead', iconColor: '#3b82f6' },
+  'Customer Support': { lead: 'Sunita Bose', leadRole: 'Support Manager', iconColor: '#14b8a6' },
 }
 
 export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
@@ -52,7 +51,7 @@ export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
       <Box sx={{ mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
           <Typography variant="h4" sx={{ fontWeight: 800, letterSpacing: '-0.025em' }}>
-            Department Workforce Distribution & Budgets
+            Department Workforce Distribution & Teams
           </Typography>
           <Chip
             icon={<CorporateFareOutlinedIcon sx={{ fontSize: '14px !important' }} />}
@@ -63,7 +62,7 @@ export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
           />
         </Box>
         <Typography variant="body2" color="text.secondary">
-          Organizational structure, active personnel headcount, quarterly budget allocations, and attendance compliance by department.
+          Organizational structure, active personnel headcount, and attendance compliance across all operational departments.
         </Typography>
       </Box>
 
@@ -87,7 +86,6 @@ export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
           const headcount = point?.headcount || 0
           const attendanceRate = point?.attendanceRate || 95.0
           const meta = DEPT_METADATA[dept.name] || {
-            budget: '$500,000',
             lead: 'Department Head',
             leadRole: 'Director',
             iconColor: dept.color,
@@ -144,18 +142,18 @@ export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5, pt: 1, borderTop: `1px solid ${theme.palette.divider}` }}>
                     <Box>
                       <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <GroupOutlinedIcon sx={{ fontSize: 13 }} /> Headcount
+                        <GroupOutlinedIcon sx={{ fontSize: 13 }} /> Total Headcount
                       </Typography>
                       <Typography variant="body1" sx={{ fontWeight: 800 }}>
-                        {headcount} staff
+                        {headcount} staff members
                       </Typography>
                     </Box>
                     <Box sx={{ textAlign: 'right' }}>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 0.5 }}>
-                        <AttachMoneyIcon sx={{ fontSize: 13 }} /> Budget
+                      <Typography variant="caption" color="text.secondary">
+                        Role
                       </Typography>
-                      <Typography variant="body1" sx={{ fontWeight: 800, color: 'primary.main' }}>
-                        {meta.budget}
+                      <Typography variant="body2" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                        {meta.leadRole.split(' ')[0]}
                       </Typography>
                     </Box>
                   </Box>
@@ -185,7 +183,7 @@ export const DepartmentsView: React.FC<DepartmentsViewProps> = ({
                     />
                   </Box>
 
-                  {/* Employee Avatars */}
+                  {/* Employee Avatars (Initials Only, No Photos) */}
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <AvatarGroup max={4} sx={{ '& .MuiAvatar-root': { width: 26, height: 26, fontSize: '0.65rem' } }}>
                       {deptEmployees.map((emp) => (

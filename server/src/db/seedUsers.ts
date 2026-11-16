@@ -48,7 +48,7 @@ export function seedUsers(db?: Database, force: boolean = false): void {
     {
       id: 'USR-ADMIN-01',
       employeeId: null,
-      name: 'Dr. Rajesh Sharma',
+      name: 'Dr. Rajesh Kumar',
       email: 'admin@stackly.com',
       password: 'Admin@123456',
       role: 'Admin',
@@ -57,7 +57,7 @@ export function seedUsers(db?: Database, force: boolean = false): void {
     {
       id: 'USR-HR-01',
       employeeId: 'EMP-1005',
-      name: 'Ananya Iyer',
+      name: 'Ananya Rao',
       email: 'hr@stackly.com',
       password: 'Hr@123456',
       role: 'HR',
@@ -66,7 +66,7 @@ export function seedUsers(db?: Database, force: boolean = false): void {
     {
       id: 'USR-MGR-01',
       employeeId: 'EMP-1001',
-      name: 'Priya Sharma',
+      name: 'Priya Kumar',
       email: 'manager@stackly.com',
       password: 'Manager@123456',
       role: 'Manager',
@@ -75,7 +75,7 @@ export function seedUsers(db?: Database, force: boolean = false): void {
     {
       id: 'USR-LEAD-01',
       employeeId: 'EMP-1002',
-      name: 'Arjun Mehta',
+      name: 'Arjun Patel',
       email: 'teamlead@stackly.com',
       password: 'TeamLead@123456',
       role: 'Team Lead',

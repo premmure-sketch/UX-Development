@@ -5,7 +5,7 @@ import { authApi, authStorage } from '../services/authApi'
 const DEFAULT_ADMIN_USER: AuthUser = {
   id: 'USR-ADMIN-01',
   employeeId: null,
-  name: 'Dr. Rajesh Sharma',
+  name: 'Dr. Rajesh Kumar',
   email: 'admin@stackly.com',
   role: 'Admin',
   departmentId: null,

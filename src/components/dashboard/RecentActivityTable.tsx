@@ -370,7 +370,6 @@ export const RecentActivityTable: React.FC<RecentActivityTableProps> = ({
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                             <Avatar
                               alt={emp.name}
-                              src={emp.avatarUrl}
                               sx={{
                                 width: 36,
                                 height: 36,

@@ -50,7 +50,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-102',
-    employeeName: 'Arjun Mehta',
+    employeeName: 'Arjun Patel',
     department: 'Engineering',
     type: 'Medical / Sick',
     dates: 'Nov 16, 2026',
@@ -60,7 +60,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-103',
-    employeeName: 'Priya Sharma',
+    employeeName: 'Priya Kumar',
     department: 'Product',
     type: 'Annual Vacation',
     dates: 'Nov 25 - Dec 02, 2026',
@@ -70,7 +70,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-104',
-    employeeName: 'Harish Sundaram',
+    employeeName: 'Harish Chand',
     department: 'Operations',
     type: 'Personal Leave',
     dates: 'Nov 19 - Nov 20, 2026',
@@ -80,7 +80,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-105',
-    employeeName: 'Deepika Nair',
+    employeeName: 'Deepika Sen',
     department: 'Human Resources',
     type: 'Family Emergency',
     dates: 'Nov 14 - Nov 15, 2026',
