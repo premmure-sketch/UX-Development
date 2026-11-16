@@ -34,11 +34,11 @@ describe('Backend SQLite Integration & Repository Pattern Tests', () => {
     const locations = locRepo.findAll()
     expect(locations.length).toBe(6)
     const locNames = locations.map((l) => l.name)
-    expect(locNames).toContain('New York HQ')
-    expect(locNames).toContain('San Francisco')
-    expect(locNames).toContain('London')
-    expect(locNames).toContain('Berlin')
-    expect(locNames).toContain('Singapore')
+    expect(locNames).toContain('Bengaluru HQ')
+    expect(locNames).toContain('Mumbai')
+    expect(locNames).toContain('Hyderabad')
+    expect(locNames).toContain('Delhi NCR')
+    expect(locNames).toContain('Pune')
     expect(locNames).toContain('Remote')
   })
 
@@ -59,9 +59,9 @@ describe('Backend SQLite Integration & Repository Pattern Tests', () => {
       expect(emp.department).toBe('Engineering')
     }
 
-    const searchResult = empRepo.findAll({ search: 'Jenkins' })
+    const searchResult = empRepo.findAll({ search: 'Priya' })
     expect(searchResult.items.length).toBe(1)
-    expect(searchResult.items[0].name).toBe('Sarah Jenkins')
+    expect(searchResult.items[0].name).toBe('Priya Sharma')
     expect(searchResult.items[0].id).toBe('EMP-1001')
   })
 
@@ -123,7 +123,7 @@ describe('Backend SQLite Integration & Repository Pattern Tests', () => {
     const { employee, history } = service.getEmployeeById('EMP-1001')
     expect(employee).not.toBeNull()
     expect(employee?.id).toBe('EMP-1001')
-    expect(employee?.name).toBe('Sarah Jenkins')
+    expect(employee?.name).toBe('Priya Sharma')
     expect(history.length).toBeGreaterThan(0)
   })
 

@@ -83,7 +83,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   }
 
   const currentUserRole: AppRole = user?.role || 'Admin'
-  const currentUserName = user?.name || 'Dr. Alistair Vance'
+  const currentUserName = user?.name || 'Dr. Rajesh Sharma'
   const currentUserEmail = user?.email || 'admin@stackly.com'
   const roleColor = ROLE_COLORS[currentUserRole] || '#8b5cf6'
 
