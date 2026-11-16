@@ -98,6 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         localStorage.removeItem('stackly_logged_out')
         setUser(res.user)
+        setActiveNav(res.user.role === 'Employee' ? 'my-service' : 'dashboard')
         setPendingMfa(null)
         return { mfaRequired: false }
       }
@@ -117,6 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       })
       localStorage.removeItem('stackly_logged_out')
       setUser(res.user)
+      setActiveNav(res.user.role === 'Employee' ? 'my-service' : 'dashboard')
       setPendingMfa(null)
     } finally {
       setIsLoading(false)
@@ -169,7 +171,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const { email, pass } = creds[role]
     await login(email, pass)
-    setActiveNav('dashboard')
+    setActiveNav(role === 'Employee' ? 'my-service' : 'dashboard')
   }, [login])
 
   const value: AuthContextValue = {

@@ -21,10 +21,17 @@ import { AttendanceTrendChart } from './components/dashboard/AttendanceTrendChar
 import { DepartmentDistributionChart } from './components/dashboard/DepartmentDistributionChart'
 import { WorkforceDonutChart } from './components/dashboard/WorkforceDonutChart'
 import { RecentActivityTable } from './components/dashboard/RecentActivityTable'
+import { AnalyticsView } from './components/dashboard/AnalyticsView'
+import { AttendanceLogsView } from './components/dashboard/AttendanceLogsView'
+import { DepartmentsView } from './components/dashboard/DepartmentsView'
+import { LeaveManagementView } from './components/dashboard/LeaveManagementView'
+import { ReportsView } from './components/dashboard/ReportsView'
+import { SettingsView } from './components/dashboard/SettingsView'
 import { useWorkforceData } from './hooks/useWorkforceData'
 
 const DashboardContent: React.FC = () => {
   const {
+    user,
     isAuthenticated,
     activeNav,
     setActiveNav,
@@ -61,6 +68,7 @@ const DashboardContent: React.FC = () => {
   }
 
   const isLoading = uiState === 'loading'
+  const isEmployeeRole = user?.role === 'Employee'
 
   return (
     <AppLayout
@@ -68,13 +76,21 @@ const DashboardContent: React.FC = () => {
       onSearchChange={(val) => updateFilter('search', val)}
     >
       {/* View Switching based on activeNav and RBAC */}
-      {activeNav === 'users' ? (
+      {activeNav === 'my-service' ? (
+        <EmployeeSelfServiceView />
+      ) : isEmployeeRole && activeNav !== 'settings' ? (
+        /* Regular Employee attempting to access restricted manager/admin sections */
+        <AccessDeniedPage
+          requiredRoles={['Admin', 'HR', 'Manager', 'Team Lead']}
+          onReturn={() => setActiveNav('my-service')}
+        />
+      ) : activeNav === 'users' ? (
         hasRole(['Admin', 'HR']) ? (
           <UserManagementView />
         ) : (
           <AccessDeniedPage
             requiredRoles={['Admin', 'HR']}
-            onReturn={() => setActiveNav('dashboard')}
+            onReturn={() => setActiveNav(isEmployeeRole ? 'my-service' : 'dashboard')}
           />
         )
       ) : activeNav === 'audit' ? (
@@ -84,11 +100,48 @@ const DashboardContent: React.FC = () => {
           <AccessDeniedPage
             requiredRoles={['Admin']}
             requiredPermission="audit:read"
-            onReturn={() => setActiveNav('dashboard')}
+            onReturn={() => setActiveNav(isEmployeeRole ? 'my-service' : 'dashboard')}
           />
         )
-      ) : activeNav === 'my-service' ? (
-        <EmployeeSelfServiceView />
+      ) : activeNav === 'analytics' ? (
+        <AnalyticsView
+          trendData={trendData}
+          workforceBreakdown={workforceBreakdown}
+          departmentData={departmentData}
+          donutDimension={donutDimension}
+          onDonutDimensionChange={setDonutDimension}
+          currentPreset={filters.datePreset}
+          onPresetChange={setDatePreset}
+          isLoading={isLoading}
+        />
+      ) : activeNav === 'attendance' ? (
+        <AttendanceLogsView
+          employees={employees}
+          filters={filters}
+          onFilterChange={updateFilter}
+          onResetFilters={resetFilters}
+          activeFilterCount={activeFilterCount}
+          isLoading={isLoading}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          onSort={handleSort}
+        />
+      ) : activeNav === 'departments' ? (
+        <DepartmentsView
+          departmentData={departmentData}
+          employees={employees}
+          isLoading={isLoading}
+          onSelectDepartmentFilter={(deptName) => {
+            updateFilter('department', deptName)
+            setActiveNav('attendance')
+          }}
+        />
+      ) : activeNav === 'leave' ? (
+        <LeaveManagementView />
+      ) : activeNav === 'reports' ? (
+        <ReportsView employees={employees} />
+      ) : activeNav === 'settings' ? (
+        <SettingsView />
       ) : (
         /* Default: Workforce Intelligence Dashboard */
         <>
