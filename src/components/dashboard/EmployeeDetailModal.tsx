@@ -69,7 +69,6 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
           <Avatar
             alt={employee.name}
-            src={employee.avatarUrl}
             sx={{
               width: 64,
               height: 64,

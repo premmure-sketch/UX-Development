@@ -50,10 +50,10 @@ For rapid evaluation, all 5 standard roles are seeded into SQLite (`server/data/
 
 | Role | Name | Email Address | Password | Permissions Summary |
 |---|---|---|---|---|
-| **Admin** | Dr. Rajesh Sharma | `admin@stackly.com` | `Admin@123456` | Superuser: System administration, user provisioning, account unlock, full audit logs, all dashboards |
-| **HR** | Ananya Iyer | `hr@stackly.com` | `Hr@123456` | Human Resources: Employee onboarding, workforce telemetry, user unlocking, department analytics |
-| **Manager** | Priya Sharma | `manager@stackly.com` | `Manager@123456` | Department Management: Departmental KPI oversight, attendance approval, team analytics |
-| **Team Lead** | Arjun Mehta | `teamlead@stackly.com` | `TeamLead@123456` | Shift & Team Leadership: Direct reports daily attendance logging, team roster views |
+| **Admin** | Dr. Rajesh Kumar | `admin@stackly.com` | `Admin@123456` | Superuser: System administration, user provisioning, account unlock, full audit logs, all dashboards |
+| **HR** | Ananya Rao | `hr@stackly.com` | `Hr@123456` | Human Resources: Employee onboarding, workforce telemetry, user unlocking, department analytics |
+| **Manager** | Priya Kumar | `manager@stackly.com` | `Manager@123456` | Department Management: Departmental KPI oversight, attendance approval, team analytics |
+| **Team Lead** | Arjun Patel | `teamlead@stackly.com` | `TeamLead@123456` | Shift & Team Leadership: Direct reports daily attendance logging, team roster views |
 | **Employee** | Rohan Verma | `employee@stackly.com` | `Employee@123456` | Self-Service: Personal check-in/out, biometric status, security posture, session control |
 
 ---

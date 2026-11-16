@@ -28,10 +28,10 @@ import { useAuth } from '../../context/AuthContext'
 import type { AppRole } from '../../types/auth'
 
 const DEMO_ACCOUNTS: { role: AppRole; email: string; pass: string; name: string; color: string }[] = [
-  { role: 'Admin', email: 'admin@stackly.com', pass: 'Admin@123456', name: 'Dr. Rajesh Sharma', color: '#8b5cf6' },
-  { role: 'HR', email: 'hr@stackly.com', pass: 'Hr@123456', name: 'Ananya Iyer', color: '#10b981' },
-  { role: 'Manager', email: 'manager@stackly.com', pass: 'Manager@123456', name: 'Priya Sharma', color: '#3b82f6' },
-  { role: 'Team Lead', email: 'teamlead@stackly.com', pass: 'TeamLead@123456', name: 'Arjun Mehta', color: '#f59e0b' },
+  { role: 'Admin', email: 'admin@stackly.com', pass: 'Admin@123456', name: 'Dr. Rajesh Kumar', color: '#8b5cf6' },
+  { role: 'HR', email: 'hr@stackly.com', pass: 'Hr@123456', name: 'Ananya Rao', color: '#10b981' },
+  { role: 'Manager', email: 'manager@stackly.com', pass: 'Manager@123456', name: 'Priya Kumar', color: '#3b82f6' },
+  { role: 'Team Lead', email: 'teamlead@stackly.com', pass: 'TeamLead@123456', name: 'Arjun Patel', color: '#f59e0b' },
   { role: 'Employee', email: 'employee@stackly.com', pass: 'Employee@123456', name: 'Rohan Verma', color: '#06b6d4' },
 ]
 
