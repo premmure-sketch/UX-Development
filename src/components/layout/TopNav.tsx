@@ -57,7 +57,7 @@ export const TopNav: React.FC<TopNavProps> = ({
 }) => {
   const theme = useTheme()
   const { mode, toggleTheme } = useThemeContext()
-  const { user, logout, switchDemoRole } = useAuth()
+  const { user, logout, switchDemoRole, setActiveNav } = useAuth()
 
   // User menu state
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
@@ -112,7 +112,10 @@ export const TopNav: React.FC<TopNavProps> = ({
             <MenuIcon />
           </IconButton>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+          <Box
+            onClick={() => setActiveNav(currentUserRole === 'Employee' ? 'my-service' : 'dashboard')}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', userSelect: 'none' }}
+          >
             <Box
               sx={{
                 width: 38,
