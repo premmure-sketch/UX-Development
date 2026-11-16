@@ -53,21 +53,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const role = user?.role || 'Admin'
 
   const navItems = [
-    { key: 'dashboard', label: 'Dashboard', icon: DashboardOutlinedIcon, badge: 'Live' },
-    ...(role === 'Employee'
-      ? [{ key: 'my-service', label: 'My Self-Service', icon: FingerprintIcon, badge: 'Active' }]
+    ...(role !== 'Employee'
+      ? [{ key: 'dashboard', label: 'Dashboard', icon: DashboardOutlinedIcon, badge: 'Live' }]
       : []),
-    { key: 'analytics', label: 'Analytics & Trends', icon: AssessmentOutlinedIcon },
-    { key: 'attendance', label: 'Attendance Logs', icon: AccessTimeOutlinedIcon },
-    { key: 'departments', label: 'Departments', icon: CorporateFareOutlinedIcon },
-    { key: 'leave', label: 'Leave Management', icon: EventAvailableOutlinedIcon },
+    {
+      key: 'my-service',
+      label: 'My Self-Service',
+      icon: FingerprintIcon,
+      badge: role === 'Employee' ? 'Active' : undefined,
+    },
+    ...(role !== 'Employee'
+      ? [
+          { key: 'analytics', label: 'Analytics & Trends', icon: AssessmentOutlinedIcon },
+          { key: 'attendance', label: 'Attendance Logs', icon: AccessTimeOutlinedIcon },
+          { key: 'departments', label: 'Departments', icon: CorporateFareOutlinedIcon },
+          { key: 'leave', label: 'Leave Management', icon: EventAvailableOutlinedIcon },
+        ]
+      : []),
     ...(role === 'Admin' || role === 'HR'
-      ? [{ key: 'users', label: role === 'Admin' ? 'User Administration' : 'User Directory', icon: SupervisorAccountOutlinedIcon }]
+      ? [
+          {
+            key: 'users',
+            label: role === 'Admin' ? 'User Administration' : 'User Directory',
+            icon: SupervisorAccountOutlinedIcon,
+          },
+        ]
       : []),
     ...(role === 'Admin'
       ? [{ key: 'audit', label: 'Audit Trail (Logs)', icon: PolicyOutlinedIcon }]
       : []),
-    { key: 'reports', label: 'Reports & Exports', icon: DescriptionOutlinedIcon },
+    ...(role !== 'Employee'
+      ? [{ key: 'reports', label: 'Reports & Exports', icon: DescriptionOutlinedIcon }]
+      : []),
     { key: 'settings', label: 'Settings', icon: TuneOutlinedIcon },
   ]
 
