@@ -80,20 +80,20 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ employees }) => {
 
   const handleExportDepartmentCsv = () => {
     const depts = [
-      { name: 'Engineering', count: 9, budget: '$1,250,000', score: '98.5%' },
-      { name: 'Product', count: 4, budget: '$720,000', score: '97.1%' },
-      { name: 'Sales', count: 5, budget: '$980,000', score: '93.4%' },
-      { name: 'Marketing', count: 3, budget: '$650,000', score: '95.2%' },
-      { name: 'Human Resources', count: 3, budget: '$420,000', score: '99.0%' },
-      { name: 'Finance', count: 2, budget: '$540,000', score: '96.8%' },
-      { name: 'Operations', count: 2, budget: '$490,000', score: '94.0%' },
-      { name: 'Customer Support', count: 2, budget: '$380,000', score: '92.5%' },
+      { name: 'Engineering', count: 9, score: '98.5%' },
+      { name: 'Product', count: 4, score: '97.1%' },
+      { name: 'Sales', count: 5, score: '93.4%' },
+      { name: 'Marketing', count: 3, score: '95.2%' },
+      { name: 'Human Resources', count: 3, score: '99.0%' },
+      { name: 'Finance', count: 2, score: '96.8%' },
+      { name: 'Operations', count: 2, score: '94.0%' },
+      { name: 'Customer Support', count: 2, score: '92.5%' },
     ]
 
-    const headers = ['Department', 'Headcount', 'Annual Budget', 'Attendance Score']
-    const rows = depts.map((d) => [`"${d.name}"`, d.count, `"${d.budget}"`, d.score])
+    const headers = ['Department', 'Headcount', 'Attendance Score']
+    const rows = depts.map((d) => [`"${d.name}"`, d.count, d.score])
     const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n')
-    downloadFile(`Stackly_Department_Budgets_${new Date().toISOString().slice(0, 10)}.csv`, csvContent, 'text/csv;charset=utf-8;')
+    downloadFile(`Stackly_Department_Distribution_${new Date().toISOString().slice(0, 10)}.csv`, csvContent, 'text/csv;charset=utf-8;')
   }
 
   const reports = [
@@ -116,8 +116,8 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ employees }) => {
       action: handleExportRosterCsv,
     },
     {
-      title: 'Department Headcounts & Budgets',
-      desc: 'High-level divisional analytics, quarterly financial allocations, and departmental attendance compliance.',
+      title: 'Department Headcounts & Distribution',
+      desc: 'High-level divisional analytics, team size distribution, and departmental attendance compliance.',
       icon: CorporateFareOutlinedIcon,
       color: '#3b82f6',
       format: 'CSV (Spreadsheet)',

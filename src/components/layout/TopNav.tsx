@@ -83,7 +83,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   }
 
   const currentUserRole: AppRole = user?.role || 'Admin'
-  const currentUserName = user?.name || 'Dr. Rajesh Sharma'
+  const currentUserName = user?.name || 'Dr. Rajesh Kumar'
   const currentUserEmail = user?.email || 'admin@stackly.com'
   const roleColor = ROLE_COLORS[currentUserRole] || '#8b5cf6'
 
@@ -427,11 +427,6 @@ export const TopNav: React.FC<TopNavProps> = ({
           >
             <Avatar
               alt={currentUserName}
-              src={
-                currentUserRole === 'Admin'
-                  ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
-                  : undefined
-              }
               sx={{
                 width: 36,
                 height: 36,
