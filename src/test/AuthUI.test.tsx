@@ -75,8 +75,8 @@ describe('Authentication & Role-Based Access Control — Frontend UI Tests', () 
   it('allows user to sign out and return to the login screen', async () => {
     render(<App />)
 
-    // Initially in dashboard (Admin Dr. Alistair Vance)
-    expect(screen.getByText('Dr. Alistair Vance')).toBeInTheDocument()
+    // Initially in dashboard (Admin Dr. Rajesh Sharma)
+    expect(screen.getByText('Dr. Rajesh Sharma')).toBeInTheDocument()
 
     const userMenuButton = screen.getByTestId('user-menu-button')
     fireEvent.click(userMenuButton)
