@@ -9,11 +9,11 @@ export type DepartmentName =
   | 'Customer Support'
 
 export type LocationName =
-  | 'New York HQ'
-  | 'San Francisco'
-  | 'London'
-  | 'Berlin'
-  | 'Singapore'
+  | 'Bengaluru HQ'
+  | 'Mumbai'
+  | 'Hyderabad'
+  | 'Delhi NCR'
+  | 'Pune'
   | 'Remote'
 
 export type EmployeeStatus = 'Present' | 'Late' | 'Remote' | 'On Leave' | 'Absent'

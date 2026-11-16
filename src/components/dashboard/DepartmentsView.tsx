@@ -27,14 +27,14 @@ interface DepartmentsViewProps {
 }
 
 const DEPT_METADATA: Record<string, { budget: string; lead: string; leadRole: string; iconColor: string }> = {
-  Engineering: { budget: '$1,250,000', lead: 'Sarah Jenkins', leadRole: 'VP of Engineering', iconColor: '#6366f1' },
-  Product: { budget: '$720,000', lead: 'Alex Vance', leadRole: 'Head of Product', iconColor: '#8b5cf6' },
-  Sales: { budget: '$980,000', lead: 'Rachel Torres', leadRole: 'Director of Global Sales', iconColor: '#06b6d4' },
-  Marketing: { budget: '$650,000', lead: 'Claire Dupont', leadRole: 'VP of Marketing', iconColor: '#ec4899' },
-  'Human Resources': { budget: '$420,000', lead: 'Eleanor Brooks', leadRole: 'Chief People Officer', iconColor: '#f59e0b' },
-  Finance: { budget: '$540,000', lead: 'David Sterling', leadRole: 'Director of Finance', iconColor: '#10b981' },
-  Operations: { budget: '$490,000', lead: 'Carlos Santana', leadRole: 'Operations Lead', iconColor: '#3b82f6' },
-  'Customer Support': { budget: '$380,000', lead: 'Hannah Abbot', leadRole: 'Support Manager', iconColor: '#14b8a6' },
+  Engineering: { budget: '₹1,45,00,000', lead: 'Priya Sharma', leadRole: 'VP of Engineering', iconColor: '#6366f1' },
+  Product: { budget: '₹95,00,000', lead: 'Ananya Iyer', leadRole: 'Head of Product', iconColor: '#8b5cf6' },
+  Sales: { budget: '₹1,20,00,000', lead: 'Aditya Kapoor', leadRole: 'Director of Global Sales', iconColor: '#06b6d4' },
+  Marketing: { budget: '₹85,00,000', lead: 'Kavya Sengupta', leadRole: 'VP of Marketing', iconColor: '#ec4899' },
+  'Human Resources': { budget: '₹55,00,000', lead: 'Deepika Nair', leadRole: 'Chief People Officer', iconColor: '#f59e0b' },
+  Finance: { budget: '₹75,00,000', lead: 'Rajesh Kulkarni', leadRole: 'Director of Finance', iconColor: '#10b981' },
+  Operations: { budget: '₹68,00,000', lead: 'Harish Sundaram', leadRole: 'Operations Lead', iconColor: '#3b82f6' },
+  'Customer Support': { budget: '₹52,00,000', lead: 'Sunita Deshmukh', leadRole: 'Support Manager', iconColor: '#14b8a6' },
 }
 
 export const DepartmentsView: React.FC<DepartmentsViewProps> = ({

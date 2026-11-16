@@ -40,7 +40,7 @@ interface LeaveRequest {
 const INITIAL_REQUESTS: LeaveRequest[] = [
   {
     id: 'LR-101',
-    employeeName: 'Devon Ramirez',
+    employeeName: 'Rohan Verma',
     department: 'Engineering',
     type: 'Annual Vacation',
     dates: 'Nov 18 - Nov 22, 2026',
@@ -50,7 +50,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-102',
-    employeeName: 'Marcus Chen',
+    employeeName: 'Arjun Mehta',
     department: 'Engineering',
     type: 'Medical / Sick',
     dates: 'Nov 16, 2026',
@@ -70,7 +70,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-104',
-    employeeName: 'Carlos Santana',
+    employeeName: 'Harish Sundaram',
     department: 'Operations',
     type: 'Personal Leave',
     dates: 'Nov 19 - Nov 20, 2026',
@@ -80,7 +80,7 @@ const INITIAL_REQUESTS: LeaveRequest[] = [
   },
   {
     id: 'LR-105',
-    employeeName: 'Jessica Taylor',
+    employeeName: 'Deepika Nair',
     department: 'Human Resources',
     type: 'Family Emergency',
     dates: 'Nov 14 - Nov 15, 2026',

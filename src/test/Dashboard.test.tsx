@@ -11,7 +11,7 @@ describe('Workforce Analytics Platform — Dashboard UI/UX & Task 2 Integration'
     render(<App />)
     expect(screen.getByText('Stackly')).toBeInTheDocument()
     expect(screen.getByText('Enterprise')).toBeInTheDocument()
-    expect(screen.getByText('Dr. Alistair Vance')).toBeInTheDocument()
+    expect(screen.getByText('Dr. Rajesh Sharma')).toBeInTheDocument()
     expect(screen.getByText('Workforce Intelligence Dashboard')).toBeInTheDocument()
   })
 
@@ -77,11 +77,11 @@ describe('Workforce Analytics Platform — Dashboard UI/UX & Task 2 Integration'
   it('filters employees dynamically by search keyword', async () => {
     render(<App />)
     const searchInput = screen.getByPlaceholderText('Filter by keyword / ID...')
-    fireEvent.change(searchInput, { target: { value: 'Sarah Jenkins' } })
+    fireEvent.change(searchInput, { target: { value: 'Priya Sharma' } })
 
-    expect(screen.getByText('Sarah Jenkins')).toBeInTheDocument()
+    expect(screen.getByText('Priya Sharma')).toBeInTheDocument()
     expect(screen.getByText('Active filters:')).toBeInTheDocument()
-    expect(screen.getByText('Keyword: "Sarah Jenkins"')).toBeInTheDocument()
+    expect(screen.getByText('Keyword: "Priya Sharma"')).toBeInTheDocument()
   })
 
   it('displays empty state when filter matches no records and restores on reset', async () => {
